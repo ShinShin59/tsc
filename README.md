@@ -1,73 +1,102 @@
-# React + TypeScript + Vite
+# OSC — Jeu du tableau périodique
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Jeu de déduction chimique : trouvez l'élément mystère en un minimum de coups.
 
-Currently, two official plugins are available:
+## Concept
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Vous êtes face à un tableau périodique interactif. Un élément est tiré au hasard — c'est **l'élément mystère**. Votre objectif : le deviner en cliquant sur les cases du tableau.
 
-## React Compiler
+### Déroulement d'une partie
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Avant le premier choix** — Aucun indice. Vous partez de zéro.
+2. **Après chaque choix** — La **carte d'identité** de l'élément sélectionné s'affiche. Elle liste ses caractéristiques (origine du nom, stabilité, découverte, etc.).
+3. **Indices par couleur** — Pour chaque caractéristique, le jeu indique si elle est **similaire** ou **différente** par rapport à l'élément mystère (code couleur).
+4. **Affiner ses hypothèses** — En croisant ces indices, vous faites un nouveau choix. Répétez jusqu'à trouver l'élément mystère.
 
-## Expanding the ESLint configuration
+**But :** identifier l'élément mystère en **le moins de coups possible**.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Carte d'identité — Caractéristiques
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Chaque élément possède une carte d'identité composée des catégories suivantes. Ce sont les critères utilisés pour les comparaisons et les indices.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Origine du nom
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Catégorie | Description |
+|-----------|-------------|
+| Personne | Nommé d'après une personne réelle |
+| Personnage | Nommé d'après un personnage (mythologie, fiction…) |
+| Organisation | Nommé d'après une institution ou un groupe |
+| Localité | Nommé d'après un lieu géographique |
+| Autre | Autre origine |
+
+Référence : [List of chemical element name etymologies](https://en.wikipedia.org/wiki/List_of_chemical_element_name_etymologies)
+
+### Stabilité
+
+| Catégorie | Indication visuelle |
+|-----------|---------------------|
+| Stable | Cyan |
+| Radioactif modéré | Vert + jaune |
+| Radioactif majeur | Orange |
+| Radioactif extrême | Rouge + violet |
+
+Référence : [List of elements by stability of isotopes](https://en.wikipedia.org/wiki/List_of_elements_by_stability_of_isotopes#/media/File:Periodic_Table_Radioactivity.svg)
+
+### État (pression et température ambiantes)
+
+Liquide · Solide · Gaz · Non défini
+
+Source : [PubChem](https://pubchem.ncbi.nlm.nih.gov/)
+
+### Découverte
+
+Avant le XVIIIᵉ siècle · XVIIIᵉ · XIXᵉ · XXᵉ · XXIᵉ
+
+Source : [PubChem](https://pubchem.ncbi.nlm.nih.gov/)
+
+### Importance biologique humaine
+
+| Catégorie | Description |
+|-----------|-------------|
+| CHNOPS | Carbone, hydrogène, azote, oxygène, phosphore, soufre |
+| Macroélément | Éléments en quantité (quantity elements) |
+| Microélément | Éléments traces essentiels (essential trace elements) |
+| Rôle incertain | Rôle biologique peu ou pas établi |
+| Non essentiel | Pas essentiel à la vie humaine |
+
+Référence : [Mineral (nutrient)](https://en.wikipedia.org/wiki/Mineral_(nutrient))
+
+### Synthèse
+
+Big Bang · Étoile mourante · Supernova · Collision de rayons cosmiques · Fusion d'étoiles à neutrons · Désintégration radioactive · Artificiel · Multiple
+
+Référence : [NASA SVS — Origins of the Elements](https://svs.gsfc.nasa.gov/13873/)
+
+## Développement
+
+Stack : React, TypeScript, Vite, Tailwind CSS.
+
+```bash
+npm install
+npm run dev      # serveur de développement
+npm run build    # build de production
+npm run preview  # prévisualiser le build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Déploiement
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Le site est publié sur **GitHub Pages** :
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Site en ligne :** [https://shinshin59.github.io/osc/](https://shinshin59.github.io/osc/)
+- **Dépôt :** [github.com/ShinShin59/osc](https://github.com/ShinShin59/osc)
+
+Chaque push sur `main` déclenche le workflow [Deploy to GitHub Pages](.github/workflows/deploy.yml) : build Vite (`npm ci` + `npm run build`), puis publication du dossier `dist/`.
+
+Pour lancer un déploiement manuel : onglet **Actions** du dépôt → **Deploy to GitHub Pages** → **Run workflow**.
+
+Le chemin de base Vite est `/osc/` (`vite.config.ts`), aligné sur le nom du dépôt GitHub Pages.
+
+### État actuel
+
+- Tableau périodique interactif (118 éléments)
+- Logique de jeu et cartes d'identité : en cours d'implémentation

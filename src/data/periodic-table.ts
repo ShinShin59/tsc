@@ -70,7 +70,7 @@ function cellStyle(category: ElementCategory): CellStyle {
   return {
     backgroundColor,
     textClass: isLight ? "text-white" : "text-gray-900",
-    mutedTextClass: isLight ? "text-white/70" : "text-gray-900/60",
+    mutedTextClass: isLight ? "text-white/85" : "text-gray-900/75",
   };
 }
 

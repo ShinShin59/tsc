@@ -19,14 +19,21 @@ export function PlaceholderCell({
   return (
     <div
       className={cn(
-        "flex aspect-square w-full flex-col items-center justify-center rounded-sm border border-dashed border-white/40 p-1",
+        "flex size-(--cell-size) flex-col items-center justify-center rounded-sm border border-dashed border-white/40 p-(--cell-pad)",
         textClass,
         className,
       )}
       style={{ backgroundColor, ...style }}
     >
-      <span className="text-lg font-bold leading-none">{label}</span>
-      <span className={cn("mt-1 text-[8px]", mutedTextClass)}>{subtitle}</span>
+      <span className="font-bold leading-none" style={{ fontSize: "var(--cell-font-name)" }}>
+        {label}
+      </span>
+      <span
+        className={cn("mt-[calc(var(--cell-pad)*0.5)]", mutedTextClass)}
+        style={{ fontSize: "var(--cell-font-meta)" }}
+      >
+        {subtitle}
+      </span>
     </div>
   );
 }

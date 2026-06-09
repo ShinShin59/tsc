@@ -1,5 +1,6 @@
 import type { Element } from "@/data/elements";
 import type { LegendePropertyId } from "@/data/legend-items";
+import { formatDiscovery } from "@/data/discovery";
 import { formatNameOrigin } from "@/data/name-origin";
 import { formatStability } from "@/data/stability";
 
@@ -40,8 +41,9 @@ export function resolveIdentityPropertyValue(
       return element.phase;
     case "synthesis":
     case "nutrition":
-    case "discovery":
       return "—";
+    case "discovery":
+      return formatDiscovery(element.number);
     case "stability":
       return formatStability(element.number);
     case "etymology":

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getElement } from "@/data/elements";
 import { LEGENDE_ITEMS } from "@/data/legend-items";
-import { compareElements, propertiesMatch } from "@/lib/properties-match";
+import { compareElements, countMatchingProperties, propertiesMatch } from "@/lib/properties-match";
 
 describe("propertiesMatch", () => {
   it("matches scalar properties for identical elements", () => {
@@ -34,5 +34,22 @@ describe("propertiesMatch", () => {
 
   it("returns false when an element number is unknown", () => {
     expect(propertiesMatch(999, 26, "period")).toBe(false);
+  });
+});
+
+describe("countMatchingProperties", () => {
+  it("counts all properties for identical elements", () => {
+    expect(countMatchingProperties(26, 26)).toEqual({ matched: 10, total: 10 });
+  });
+
+  it("returns zero matched when an element is unknown", () => {
+    expect(countMatchingProperties(999, 26)).toEqual({ matched: 0, total: 10 });
+  });
+
+  it("returns partial overlap between distinct elements", () => {
+    const { matched, total } = countMatchingProperties(26, 28);
+    expect(total).toBe(10);
+    expect(matched).toBeGreaterThan(0);
+    expect(matched).toBeLessThan(total);
   });
 });

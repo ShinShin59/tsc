@@ -32,7 +32,7 @@ French is the primary UI language. Code identifiers and types stay in English.
 | **Carte mystère** | Summary card for the mystery element; properties lock in as matches are discovered | Mystery card, target card |
 | **Highlight** (surbrillance) | Property value matches mystery element — accent on identity card | Green, similar |
 | **Shadow** (ombre) | Property value differs from mystery — dimmed on identity card | Dim, different |
-| **Jauge de correspondance** | Percentage gauge of overall property overlap with mystery | Match %, proximity score |
+| **Jauge de correspondance** | Per-coup vertical bar under historique entries — fill = shared properties / 10 (`countMatchingProperties`) | Match %, global gauge |
 
 ### Code identifiers (identity card)
 

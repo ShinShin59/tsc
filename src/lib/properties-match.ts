@@ -2,7 +2,7 @@ import type { Element } from "@/data/elements";
 import { getElement } from "@/data/elements";
 import { getDiscoveryPeriod } from "@/data/discovery";
 import { resolveElementBlock } from "@/data/identity-property-values";
-import type { LegendePropertyId } from "@/data/legend-items";
+import { LEGENDE_ITEMS, type LegendePropertyId } from "@/data/legend-items";
 import { getNameOriginCategories } from "@/data/name-origin";
 import { getNutritionCategory } from "@/data/nutrition";
 import { getStabilityTier } from "@/data/stability";
@@ -60,4 +60,25 @@ export function compareElements(
         getNameOriginCategories(elementB.number),
       );
   }
+}
+
+export type PropertyMatchCount = {
+  matched: number;
+  total: number;
+};
+
+export function countMatchingProperties(
+  elementNumberA: number,
+  elementNumberB: number,
+): PropertyMatchCount {
+  const total = LEGENDE_ITEMS.length;
+  let matched = 0;
+
+  for (const { id } of LEGENDE_ITEMS) {
+    if (propertiesMatch(elementNumberA, elementNumberB, id)) {
+      matched += 1;
+    }
+  }
+
+  return { matched, total };
 }

@@ -8,12 +8,15 @@ import { useGameStore } from "@/store/game";
 export function CarteIdentite() {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
   const committedNumber = useGameStore((state) => state.committedNumber);
+  const history = useGameStore((state) => state.history);
   const mysteryNumber = useGameStore((state) => state.mysteryNumber);
 
   const displayNumber = hoveredNumber ?? committedNumber;
   const element = displayNumber ? getElement(displayNumber) : undefined;
   const showComparison =
-    committedNumber !== null && displayNumber === committedNumber;
+    displayNumber !== null &&
+    (history.includes(displayNumber) ||
+      (hoveredNumber === null && displayNumber === committedNumber));
 
   return (
     <aside

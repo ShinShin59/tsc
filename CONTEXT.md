@@ -20,7 +20,7 @@ Hover → browse, click → compare against l'élément mystère:
 ```
 1. Survol       → Carte d'identité preview (all properties dimmed, values visible)
 2. Clic         → comparison vs élément mystère (Highlight / Shadow on identity card)
-3. (Later)      → coup counter, historique, Carte mystère lock-in
+3. (Later)      → compteur de coups, Carte mystère lock-in
 ```
 
 > _GDD §2 originally required encoche before comparison — superseded by ADR-0003 for the prototype._
@@ -61,13 +61,14 @@ App
     ├── CarteIdentite     — identity card; Highlight/Shadow via match/mismatch
     ├── CaseMystere       — mystery element placeholder
     ├── CarteMystere      — mystery card (discovered properties)
+    ├── Historique        — last 10 coups + jauge bars; hover replays identity card
     └── Legende         — property-type legend strip
 ```
 
 ### Data layer
 
 - `src/data/elements.ts` — `PeriodicTableJSON.json` → `Element` records; enriched identity fields via `src/data/enriched/`.
-- `src/store/game.ts` — Zustand: `dailySeed`, `mysteryNumber`, `hoveredNumber`, `committedNumber`, `commitSelection`.
+- `src/store/game.ts` — Zustand: `dailySeed`, `mysteryNumber`, `hoveredNumber`, `committedNumber`, `history`, `maxTries`, `commitSelection`.
 
 ### UI primitives
 
@@ -79,8 +80,7 @@ App
 | Feature | GDD name | Notes |
 | ------- | -------- | ----- |
 | Move counter | Compteur de coups | Prominent; optimizes deduction |
-| History | Module d'historique | Chronological coups; hover replays identity card with highlight/shadow + jauge |
-| Match gauge | Jauge de correspondance | % proximity from shared properties |
+| History | Module d'historique | Chronological coups; hover replay; per-coup jauge de correspondance |
 | Help | Bouée | Tutorial / rules |
 | Settings | Roue crantée | Difficulty, toggles, palette mode |
 | Stats | Histogramme | Score distribution; local mock first, server later |
@@ -108,8 +108,8 @@ App
 | Carte d'identité Highlight/Shadow | Done | Identity card only |
 | Carte mystère (discovered properties) | Prototype | Mock reveals; wire on commit later |
 | Encoche validation | Deferred | Superseded by click-to-compare (ADR-0003) |
-| History + hover replay | Not started | §3 |
-| Compteur / jauge / histogramme | Not started | §3 |
+| History + hover replay + per-coup jauge | Done | §3 |
+| Compteur / histogramme | Not started | §3 |
 | Colour palette modes | Not started | §3 |
 | Difficulty levels + toggles | Not started | §4 |
 | LocalStorage session persistence | Not started | §6 future |

@@ -2,6 +2,7 @@ import type { Element } from "@/data/elements";
 import type { LegendePropertyId } from "@/data/legend-items";
 import { formatDiscovery } from "@/data/discovery";
 import { formatNameOrigin } from "@/data/name-origin";
+import { formatNutrition } from "@/data/nutrition";
 import { formatStability } from "@/data/stability";
 
 function resolveBlock({ number, group }: Element): string {
@@ -40,8 +41,9 @@ export function resolveIdentityPropertyValue(
     case "state":
       return element.phase;
     case "synthesis":
-    case "nutrition":
       return "—";
+    case "nutrition":
+      return formatNutrition(element.number);
     case "discovery":
       return formatDiscovery(element.number);
     case "stability":

@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "generate:name-origin": "node scripts/generate-name-origin.mjs",
     "generate:stability": "node scripts/generate-stability.mjs",
-    "generate:discovery": "node scripts/generate-discovery.mjs"
+    "generate:discovery": "node scripts/generate-discovery.mjs",
+    "generate:nutrition": "node scripts/generate-nutrition.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

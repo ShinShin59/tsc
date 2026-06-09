@@ -1,11 +1,7 @@
 import type { CSSProperties } from "react";
 import { getElement } from "@/data/elements";
 import { useGameStore } from "@/store/game";
-import {
-  SELECTED_CELL_SCALE,
-  SELECTED_CELL_SIZE,
-  TABLE_CELL_SIZE,
-} from "./constants";
+import { SELECTED_CELL_SCALE, SELECTED_CELL_SIZE, TABLE_CELL_SIZE } from "./constants";
 import { ElementCell } from "./ElementCell";
 
 export function CaseSelectionnee() {
@@ -18,10 +14,7 @@ export function CaseSelectionnee() {
       aria-label={element ? `Élément sélectionné : ${element.name}` : "Aucun élément sélectionné"}
     >
       {element ? (
-        <div
-          key={element.number}
-          className="size-full animate-in fade-in zoom-in-95 duration-200"
-        >
+        <div key={element.number} className="size-full animate-in fade-in zoom-in-95 duration-200">
           <div
             className="origin-top-left"
             style={
@@ -41,9 +34,7 @@ export function CaseSelectionnee() {
           </div>
         </div>
       ) : (
-        <div className="flex size-full items-center justify-center rounded-sm border border-dashed border-white/40 text-2xl font-bold text-white/50">
-          ?
-        </div>
+        <div className="flex size-full items-center justify-center rounded-sm border-white/40 text-2xl font-bold text-white/50"></div>
       )}
     </div>
   );

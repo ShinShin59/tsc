@@ -11,8 +11,8 @@ French is the primary UI language. Code identifiers and types stay in English.
 | **Élément mystère** | The element to identify this session (daily or training) | Target, secret, answer |
 | **Triangulation** | Elimination loop: each validated coup narrows candidates by property comparison | Deduction, elimination |
 | **Partie** | Session from first selection to correct identification | Game, round |
-| **Coup** | One **validated** attempt (encoche confirmed) — not a mere cell click | Try, guess, click |
-| **Essai** | A selection that may or may not yet be validated | Attempt (prefer **essai** in history context) |
+| **Coup** | One grid **commit** (`commitSelection`) — click runs comparison vs l'élément mystère and appends to historique | Try, guess, essai |
+| **Essai** | GDD term for pre-encoche selection — **superseded** by ADR-0003 (click = coup); use **coup** in historique | Attempt |
 | **Mode entraînement** | Post-daily practice with random seed, unlimited replays | Practice mode, sandbox |
 
 ## Selection flow (ADR-0003; GDD §2 encoche deferred)
@@ -98,7 +98,7 @@ Normalized synthesis classes (GDD §5): Big Bang, étoiles mourantes, fusion d'�
 | **Bouée** | Tutorial / help overlay (rules) | Help, lifebuoy |
 | **Roue crantée** | Settings overlay (difficulty, toggles, palette) | Gear, settings |
 | **Histogramme** | Stats overlay — score distribution | Stats, chart |
-| **Module d'historique** | Chronological essai list; hover replays identity card states | History, log |
+| **Module d'historique** | Chronological **coup** list; hover replays identity card with highlight/shadow + jauge per entry | History, log |
 | **Compteur de coups** | Prominent move counter | Move counter, score |
 | **Overlay** | Modal from header icon | Modal, dialog |
 

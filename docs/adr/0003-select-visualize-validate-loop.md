@@ -19,7 +19,7 @@ Comparison feeds the **Carte d'identité** only in this slice. **Carte mystère*
 | Input | Effect |
 | ----- | ------ |
 | **Hover** cell | Live preview in `CaseSelectionnee`; Carte d'identité all rows **dimmed** (values visible) |
-| **Click** cell | Commit comparison on that element: matching rows **accent**, rest dimmed — even while pointer stays on the cell |
+| **Click** cell | **Coup** — commit comparison on that element: matching rows **accent**, rest dimmed — even while pointer stays on the cell; append to `history[]` when element changes |
 | **Mouse leave** grid | Restore last **committed** element (100% + frozen comparison) |
 | **Hover** another cell after commit | Live preview again (dimmed rows); leave restores commit |
 | **Re-click** same cell | No-op |
@@ -39,7 +39,9 @@ Comparison feeds the **Carte d'identité** only in this slice. **Carte mystère*
 
 Comparison is **derived at render** from `committedNumber` vs `mysteryNumber` — no cached match set.
 
-**Deferred:** append each new commit to `history[]` when the historique module lands (see ADR-0001).
+**Coup = click commit** (encoche deferred indefinitely). Each distinct commit is one **coup** — historique lists coups chronologically (see module d'historique in `UBIQUITOUS_LANGUAGE.md`).
+
+**Historique:** append atomic number to `history[]` inside `commitSelection` when `committedNumber` changes; cap length by `maxTries` (store field, default 118; enforcement deferred until difficulty/settings).
 
 ### Property matching (`propertiesMatch`)
 
@@ -58,5 +60,5 @@ Typed per property — not formatted-string equality:
 - `CaseSelectionnee`: shows hovered or committed element at full slot scale (hover scale / commit animation deferred).
 - `CarteIdentite`: row state from hover vs committed comparison mode.
 - `CarteMystere`: unchanged this slice (mock reveals remain).
-- Difficulty modes (§4) and coup counter deferred until encoche or an explicit “commit = coup” rule is restored.
+- Difficulty modes (§4) and compteur de coups UI deferred; **commit = coup** is canonical.
 - Unit tests for `propertiesMatch` (scalar + multi-value overlap cases).

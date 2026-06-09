@@ -79,7 +79,7 @@ App
 | Feature | GDD name | Notes |
 | ------- | -------- | ----- |
 | Move counter | Compteur de coups | Prominent; optimizes deduction |
-| History | Module d'historique | Chronological essais; hover replays identity card with highlight/shadow |
+| History | Module d'historique | Chronological coups; hover replays identity card with highlight/shadow + jauge |
 | Match gauge | Jauge de correspondance | % proximity from shared properties |
 | Help | Bouée | Tutorial / rules |
 | Settings | Roue crantée | Difficulty, toggles, palette mode |

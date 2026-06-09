@@ -1,6 +1,7 @@
 import type { Element } from "@/data/elements";
 import type { LegendePropertyId } from "@/data/legend-items";
 import { formatNameOrigin } from "@/data/name-origin";
+import { formatStability } from "@/data/stability";
 
 function resolveBlock({ number, group }: Element): string {
   if ((number >= 57 && number <= 71) || (number >= 89 && number <= 103)) {
@@ -40,8 +41,9 @@ export function resolveIdentityPropertyValue(
     case "synthesis":
     case "nutrition":
     case "discovery":
-    case "stability":
       return "—";
+    case "stability":
+      return formatStability(element.number);
     case "etymology":
       return formatNameOrigin(element.number);
   }

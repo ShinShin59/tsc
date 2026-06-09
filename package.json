@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "vp lint",
     "preview": "vite preview",
-    "generate:name-origin": "node scripts/generate-name-origin.mjs"
+    "generate:name-origin": "node scripts/generate-name-origin.mjs",
+    "generate:stability": "node scripts/generate-stability.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

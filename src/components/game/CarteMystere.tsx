@@ -2,9 +2,9 @@ import { CarteIdentiteRow } from "@/components/game/CarteIdentiteRow";
 import { getElement } from "@/data/elements";
 import { resolveIdentityPropertyValue } from "@/data/identity-property-values";
 import { LEGENDE_ITEMS, type LegendePropertyId } from "@/data/legend-items";
+import { useGameStore } from "@/store/game";
 
-/** Presentation mock — wire to store when comparison engine lands. */
-const MOCK_MYSTERY_NUMBER = 1;
+/** Presentation mock — wire to comparison engine when highlight/shadow lands. */
 const MOCK_REVEALED_PROPERTIES = new Set<LegendePropertyId>([
   "period",
   "block",
@@ -14,7 +14,8 @@ const MOCK_REVEALED_PROPERTIES = new Set<LegendePropertyId>([
 ]);
 
 export function CarteMystere() {
-  const element = getElement(MOCK_MYSTERY_NUMBER);
+  const mysteryNumber = useGameStore((state) => state.mysteryNumber);
+  const element = getElement(mysteryNumber);
 
   return (
     <aside aria-label="Carte mystère" className="flex w-[175px] flex-col">

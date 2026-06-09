@@ -14,7 +14,7 @@ export function SelectedCell() {
 
   return (
     <div
-      className="pointer-events-none absolute top-0 left-[20%] z-10"
+      className=""
       style={{ width: SELECTED_CELL_SIZE, height: SELECTED_CELL_SIZE }}
       aria-label={element ? `Élément sélectionné : ${element.name}` : "Aucun élément sélectionné"}
     >

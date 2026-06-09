@@ -8,11 +8,11 @@ export function Legende() {
       className="w-fit shrink-0 border-t border-white/20 bg-[#2d3e47]/95 px-3 py-1.5 ml-auto"
     >
       <ul className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
-        {LEGENDE_ITEMS.map(({ id, label, icon: Icon, color, description }) => (
+        {LEGENDE_ITEMS.map(({ id, label, icon, description }) => (
           <li key={id}>
             <Tooltip>
               <TooltipTrigger render={<span className="flex cursor-default items-center gap-1" />}>
-                <Icon className="size-3.5 shrink-0" style={{ color }} aria-hidden />
+                <img src={icon} alt="" aria-hidden className="h-[19px] w-auto shrink-0" />
                 <span className="text-[11px] text-amber-200/90">{label}</span>
               </TooltipTrigger>
               <TooltipContent side="top">{description}</TooltipContent>

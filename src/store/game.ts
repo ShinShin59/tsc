@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { MAX_ATOMIC_NUMBER } from "@/data/elements";
+import { getElement, MAX_ATOMIC_NUMBER } from "@/data/elements";
 import { getDailySeed, mysteryIndexFromSeed } from "@/lib/daily-mystery";
 
 export type GameMode = "daily" | "training";
@@ -9,14 +9,23 @@ function clampMaxTries(value: number): number {
   return Math.min(MAX_ATOMIC_NUMBER, Math.max(1, Math.trunc(value)));
 }
 
+function logMysteryElement(gameMode: GameMode, seed: string, mysteryNumber: number): void {
+  const element = getElement(mysteryNumber);
+  const label = element ? `${element.name} (${element.symbol})` : `#${mysteryNumber}`;
+  console.info(`[osc] élément mystère [${gameMode}] seed=${seed} → ${label}`);
+}
+
 function createInitialPartieState() {
   const seed = getDailySeed();
   const maxTries = MAX_ATOMIC_NUMBER;
+  const mysteryNumber = mysteryIndexFromSeed(seed);
+
+  logMysteryElement("daily", seed, mysteryNumber);
 
   return {
     gameMode: "daily" as GameMode,
     seed,
-    mysteryNumber: mysteryIndexFromSeed(seed),
+    mysteryNumber,
     partieStatus: "playing" as PartieStatus,
     maxTries,
     partieMaxTries: maxTries,
@@ -73,11 +82,14 @@ export const useGameStore = create<GameState>((set) => ({
   startTrainingPartie: () =>
     set((state) => {
       const seed = crypto.randomUUID();
+      const mysteryNumber = mysteryIndexFromSeed(seed);
+
+      logMysteryElement("training", seed, mysteryNumber);
 
       return {
         gameMode: "training",
         seed,
-        mysteryNumber: mysteryIndexFromSeed(seed),
+        mysteryNumber,
         partieStatus: "playing",
         hoveredNumber: null,
         committedNumber: null,

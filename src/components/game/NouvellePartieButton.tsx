@@ -50,7 +50,12 @@ export function NouvellePartieButton() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="border-white/20 bg-transparent sm:justify-end">
-            <Button type="button" variant="outline" onClick={() => setConfirmOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              className="text-black hover:text-black"
+              onClick={() => setConfirmOpen(false)}
+            >
               Annuler
             </Button>
             <Button

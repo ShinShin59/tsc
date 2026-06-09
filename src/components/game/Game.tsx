@@ -5,6 +5,7 @@ import { CaseSelectionnee } from "@/components/game/CaseSelectionnee";
 import { ElementFicheLayout } from "@/components/game/ElementFicheLayout";
 import { Historique } from "@/components/game/Historique";
 import { Legende } from "@/components/game/Legende";
+import { NouvellePartieButton } from "@/components/game/NouvellePartieButton";
 import { PeriodicTable } from "@/components/game/PeriodicTable";
 
 export function Game() {
@@ -23,6 +24,7 @@ export function Game() {
             <CarteMystere />
           </ElementFicheLayout>
         </div>
+        <NouvellePartieButton />
       </div>
       <Legende />
     </div>

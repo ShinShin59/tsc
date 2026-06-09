@@ -12,6 +12,7 @@ type PeriodicTableProps = {
 export function PeriodicTable({ className }: PeriodicTableProps) {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
   const committedNumber = useGameStore((state) => state.committedNumber);
+  const partieStatus = useGameStore((state) => state.partieStatus);
   const setHoveredNumber = useGameStore((state) => state.setHoveredNumber);
   const commitSelection = useGameStore((state) => state.commitSelection);
   const spacer = Math.round(TABLE_CELL_SIZE * 0.06);
@@ -37,7 +38,11 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
               element={el}
               selected={el.number === highlightedNumber}
               onMouseEnter={() => setHoveredNumber(el.number)}
-              onClick={() => commitSelection(el.number)}
+              onClick={() => {
+                if (partieStatus === "playing") {
+                  commitSelection(el.number);
+                }
+              }}
             />
           </div>
         ))}

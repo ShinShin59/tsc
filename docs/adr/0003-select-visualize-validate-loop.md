@@ -39,14 +39,14 @@ Comparison feeds the **Carte d'identité** only in this slice. **Carte mystère*
 | ----- | ------ |
 | `hoveredNumber` | Grid or historique hover; `null` when pointer off both |
 | `committedNumber` | Last clicked element; persists on mouse leave |
-| `history` | Chronological coup list (atomic numbers); append on commit when element changes and under `maxTries` |
-| `maxTries` | Max coups per partie (default 118); commits no-op at cap |
+| `history` | Chronological coup list (atomic numbers); append on commit when element changes and under `partieMaxTries` |
+| `maxTries` | User preference for coup cap (settings slider, default 118) |
+| `partieMaxTries` | Active cap for current partie; snapshotted at init / `startTrainingPartie` (ADR-0005) |
+| `partieStatus` | `"playing" \| "won" \| "lost"` — blocks commits when not playing (ADR-0005) |
 
-Comparison is **derived at render** from `committedNumber` vs `mysteryNumber` — no cached match set.
+Comparison is **derived at render** from `committedNumber` vs `mysteryNumber` — no cached match set. Carte mystère discovery derived from `history[]` (ADR-0005).
 
-**Coup = click commit** (encoche deferred indefinitely). Each distinct commit is one **coup** — historique lists coups chronologically (see module d'historique in `UBIQUITOUS_LANGUAGE.md`).
-
-**Historique:** append atomic number to `history[]` inside `commitSelection` when `committedNumber` changes and `history.length < maxTries`. Default `maxTries = 118` (`MAX_ATOMIC_NUMBER`). When at cap, **commits are no-ops** (no append, no `committedNumber` change); grid hover browse and historique replay still work. Win / game-over UI deferred.
+**Historique:** append atomic number to `history[]` inside `commitSelection` when `committedNumber` changes and `history.length < partieMaxTries`. When at cap or partie ended, **commits are no-ops**; grid hover browse and historique replay still work. Win/loss UI: ADR-0005.
 
 ### Property matching (`propertiesMatch`)
 
@@ -67,6 +67,6 @@ Typed per property — not formatted-string equality:
 - `CaseSelectionnee`: shows hovered or committed element at full slot scale (hover scale / commit animation deferred).
 - `CarteIdentite`: row state from hover vs committed comparison mode.
 - `Historique` + `HistoryCase`: per-coup jauge via `countMatchingProperties`; hover replay via shared `hoveredNumber`.
-- `CarteMystere`: unchanged this slice (mock reveals remain).
+- `CarteMystere`: discovery from `history[]` via `getDiscoveredPropertyIds` (ADR-0005).
 - Difficulty modes (§4) and compteur de coups UI deferred; **commit = coup** is canonical.
 - Unit tests for `propertiesMatch` (scalar + multi-value overlap cases).

@@ -20,7 +20,9 @@ Hover → browse, click → compare against l'élément mystère:
 ```
 1. Survol       → Carte d'identité preview (all properties dimmed, values visible)
 2. Clic         → comparison vs élément mystère (Highlight / Shadow on identity card)
-3. (Later)      → compteur de coups, Carte mystère lock-in
+3. Carte mystère → matching properties lock in from committed coups (ADR-0005)
+4. Fin de partie → win on mystery commit; loss at coup cap; CaseMystere reveal
+5. Nouvelle partie → training reset with random seed (ADR-0005)
 ```
 
 > _GDD §2 originally required encoche before comparison — superseded by ADR-0003 for the prototype._
@@ -59,16 +61,18 @@ App
     ├── PeriodicTable   — 18-column grid, ElementCell (hover + click)
     ├── CaseSelectionnee  — enlarged cell preview (hover or last commit)
     ├── CarteIdentite     — identity card; Highlight/Shadow via match/mismatch
-    ├── CaseMystere       — mystery element placeholder
-    ├── CarteMystere      — mystery card (discovered properties)
+    ├── CaseMystere       — mystery element placeholder; reveals symbol on win/loss
+    ├── CarteMystere      — mystery card (discovered properties from history)
     ├── Historique        — last 10 coups + jauge bars; hover replays identity card
+    ├── NouvellePartieButton — training reset (bottom-left)
     └── Legende         — property-type legend strip
 ```
 
 ### Data layer
 
 - `src/data/elements.ts` — `PeriodicTableJSON.json` → `Element` records; enriched identity fields via `src/data/enriched/`.
-- `src/store/game.ts` — Zustand: `dailySeed`, `mysteryNumber`, `hoveredNumber`, `committedNumber`, `history`, `maxTries`, `commitSelection`.
+- `src/store/game.ts` — Zustand: `seed`, `gameMode`, `mysteryNumber`, `partieStatus`, `maxTries`, `partieMaxTries`, hover/commit comparison, `history`, `startTrainingPartie`.
+- `src/lib/properties-match.ts` — `propertiesMatch`, `getDiscoveredPropertyIds`, `countMatchingProperties`.
 
 ### UI primitives
 
@@ -106,14 +110,17 @@ App
 | CaseSelectionnee enlarged preview | Done | Hover or last commit |
 | Legende property strip | UI shell | Not wired to palette modes |
 | Carte d'identité Highlight/Shadow | Done | Identity card only |
-| Carte mystère (discovered properties) | Prototype | Mock reveals; wire on commit later |
+| Carte mystère (discovered properties) | Done | ADR-0005; derived from `history[]` |
+| Win / loss + CaseMystere reveal | Done | ADR-0005 |
+| Coup cap slider (settings) | Done | `maxTries` / `partieMaxTries`; session-only |
+| Nouvelle partie (training) | Done | ADR-0005; always available MVP |
 | Encoche validation | Deferred | Superseded by click-to-compare (ADR-0003) |
 | History + hover replay + per-coup jauge | Done | §3 |
 | Compteur / histogramme | Not started | §3 |
 | Colour palette modes | Not started | §3 |
 | Difficulty levels + toggles | Not started | §4 |
 | LocalStorage session persistence | Not started | §6 future |
-| Training mode (post-daily) | Not started | §6 future |
+| Training gated behind daily win | Deferred | ADR-0002 full flow |
 
 ## Constraints
 

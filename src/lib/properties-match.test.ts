@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getElement } from "@/data/elements";
 import { LEGENDE_ITEMS } from "@/data/legend-items";
-import { compareElements, countMatchingProperties, propertiesMatch } from "@/lib/properties-match";
+import { compareElements, countMatchingProperties, getDiscoveredPropertyIds, propertiesMatch } from "@/lib/properties-match";
 
 describe("propertiesMatch", () => {
   it("matches scalar properties for identical elements", () => {
@@ -51,5 +51,26 @@ describe("countMatchingProperties", () => {
     expect(total).toBe(10);
     expect(matched).toBeGreaterThan(0);
     expect(matched).toBeLessThan(total);
+  });
+});
+
+describe("getDiscoveredPropertyIds", () => {
+  it("returns an empty set when history is empty", () => {
+    expect(getDiscoveredPropertyIds([], 61)).toEqual(new Set());
+  });
+
+  it("discovers matching properties from wrong coups", () => {
+    const discovered = getDiscoveredPropertyIds([26], 11);
+    expect(discovered.has("family")).toBe(false);
+    expect(discovered.size).toBeGreaterThan(0);
+    expect(discovered.size).toBeLessThan(LEGENDE_ITEMS.length);
+  });
+
+  it("discovers all legend properties when mystery is in history", () => {
+    const discovered = getDiscoveredPropertyIds([26, 28], 28);
+    expect(discovered.size).toBe(LEGENDE_ITEMS.length);
+    for (const { id } of LEGENDE_ITEMS) {
+      expect(discovered.has(id)).toBe(true);
+    }
   });
 });

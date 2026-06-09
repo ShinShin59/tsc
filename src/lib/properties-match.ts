@@ -67,6 +67,23 @@ export type PropertyMatchCount = {
   total: number;
 };
 
+export function getDiscoveredPropertyIds(
+  history: readonly number[],
+  mysteryNumber: number,
+): Set<LegendePropertyId> {
+  const discovered = new Set<LegendePropertyId>();
+
+  for (const coup of history) {
+    for (const { id } of LEGENDE_ITEMS) {
+      if (propertiesMatch(coup, mysteryNumber, id)) {
+        discovered.add(id);
+      }
+    }
+  }
+
+  return discovered;
+}
+
 export function countMatchingProperties(
   elementNumberA: number,
   elementNumberB: number,

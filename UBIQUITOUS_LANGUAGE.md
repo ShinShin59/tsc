@@ -10,10 +10,13 @@ French is the primary UI language. Code identifiers and types stay in English.
 | **Daily Mystery Element** | One mystery element per calendar day, same worldwide via date seed | Daily puzzle, word of the day |
 | **Élément mystère** | The element to identify this session (daily or training) | Target, secret, answer |
 | **Triangulation** | Elimination loop: each validated coup narrows candidates by property comparison | Deduction, elimination |
-| **Partie** | Session from first selection to correct identification | Game, round |
+| **Partie** | Session from first coup to win, loss, or abandon | Game, round |
+| **partieStatus** | `"playing"`, `"won"`, or `"lost"` — blocks grid commits when not playing | Game state |
+| **partieMaxTries** | Active coup cap for the current partie (snapshotted at start) | Max tries |
+| **maxTries** | User preference for coup cap (settings slider); applies next partie | Try limit |
 | **Coup** | One grid **commit** (`commitSelection`) — click runs comparison vs l'élément mystère and appends to historique | Try, guess, essai |
 | **Essai** | GDD term for pre-encoche selection — **superseded** by ADR-0003 (click = coup); use **coup** in historique | Attempt |
-| **Mode entraînement** | Post-daily practice with random seed, unlimited replays | Practice mode, sandbox |
+| **Mode entraînement** | Practice with random seed via « Nouvelle partie »; daily win gate deferred (ADR-0005) | Practice mode, sandbox |
 
 ## Selection flow (ADR-0003; GDD §2 encoche deferred)
 
@@ -40,6 +43,9 @@ French is the primary UI language. Code identifiers and types stay in English.
 | ---- | ----------- | ---- |
 | `IdentityPropertyState.match` | Highlight | After commit, property in common with mystery |
 | `IdentityPropertyState.mismatch` | Shadow (or undifferentiated preview) | After commit, no match; also all rows while hovering |
+| `MysteryPropertyState.discovered` | Carte mystère row fixed | Match revealed on mystery card |
+| `MysteryPropertyState.undiscovered` | Carte mystère row hidden | Unknown property |
+| `getDiscoveredPropertyIds()` | Union of property matches across committed coups | Discovery helper |
 | `propertiesMatch()` | Comparison engine | Typed per-property check vs mystery |
 
 ## Identity-card properties

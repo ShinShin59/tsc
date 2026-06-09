@@ -1,6 +1,9 @@
 import { cn } from "@/lib/utils";
 
-export type CarteIdentiteRowState = "off" | "revealed" | "hidden";
+export type IdentityPropertyState = "match" | "mismatch";
+export type MysteryPropertyState = "undiscovered" | "discovered";
+
+export type CarteIdentiteRowState = IdentityPropertyState | MysteryPropertyState;
 
 type CarteIdentiteRowProps = {
   icon: string;
@@ -8,9 +11,9 @@ type CarteIdentiteRowProps = {
   state?: CarteIdentiteRowState;
 };
 
-export function CarteIdentiteRow({ icon, value, state = "off" }: CarteIdentiteRowProps) {
-  const isOff = state === "off";
-  const isHidden = state === "hidden";
+export function CarteIdentiteRow({ icon, value, state = "mismatch" }: CarteIdentiteRowProps) {
+  const isDimmed = state === "mismatch";
+  const isUndiscovered = state === "undiscovered";
 
   return (
     <li className="flex items-center gap-x-1.5">
@@ -20,19 +23,20 @@ export function CarteIdentiteRow({ icon, value, state = "off" }: CarteIdentiteRo
         aria-hidden
         className={cn(
           "size-[19px] shrink-0 object-contain",
-          (isOff || isHidden) && "brightness-0 opacity-30",
+          (isDimmed || isUndiscovered) && "brightness-0 opacity-30",
         )}
       />
       <span
         className={cn(
           "min-w-0 truncate text-[12px] font-bold leading-none",
-          isOff && "text-black/35",
-          state === "revealed" && "text-accent",
-          isHidden && "text-accent/50",
+          state === "match" && "text-accent",
+          isDimmed && "text-black/35",
+          state === "discovered" && "text-accent",
+          isUndiscovered && "text-accent/50",
         )}
-        title={isHidden ? undefined : value}
+        title={isUndiscovered ? undefined : value}
       >
-        {isHidden ? "?" : value}
+        {isUndiscovered ? "?" : value}
       </span>
     </li>
   );

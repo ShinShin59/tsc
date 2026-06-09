@@ -20,6 +20,9 @@ Header overlay state stays in `Header` until another module needs it.
 
 - `PeriodicTable` currently calls `addClick` on cell click — **temporary**; GDD requires select → visualize → validate (encoche) before recording a coup (see ADR-0003).
 - `CaseSelectionnee` subscribes for visualisation preview.
-- Future slices: `mysteryNumber`, `validatedEssais[]`, `discoveredProperties`, `difficulty`, `paletteMode`, daily/training seed.
+- Daily mystery: `dailySeed`, `mysteryNumber` (see ADR-0002).
+- Comparison (ADR-0003): `hoveredNumber` + `committedNumber`; match/mismatch derived at render — no cached comparison set.
+- **`history[]` deferred:** append each new click to `history[]` when the historique module lands (easy hook on `commitSelection`).
+- Future slices: `discoveredProperties`, `coupCount`, `difficulty`, `paletteMode`, training seed.
 - Settings affecting gameplay (difficulty, toggles) move from `SettingsButton` local state into the store when wired.
 - LocalStorage persistence (GDD §6) layers on top of this store later — not in scope yet.

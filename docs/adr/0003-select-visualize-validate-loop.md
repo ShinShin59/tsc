@@ -1,35 +1,62 @@
-# ADR-0003: Select → visualize → validate game loop
+# ADR-0003: Hover preview → click comparison loop
 
 ## Status
 
-Accepted
+Accepted (revised 2026-06-09 — supersedes encoche-based flow)
 
 ## Context
 
-GDD §2 defines a three-step flow to preserve strategic play:
+GDD §2 originally defined select → visualise → **encoche** validation before comparison. During implementation we chose a lighter loop: **hover to browse**, **click to compare** against l'élément mystère. No encoche affordance.
 
-1. **Sélection** — pick a cell (no coup yet)
-2. **Visualisation** — consult the Carte d'identité
-3. **Validation** — encoche (checkmark) confirms the essai, runs comparison, increments coup counter
+> _Contradicts GDD §2 (validation via encoche)_ — intentional prototype simplification; revisit if difficulty modes (§4) need delayed identity-card reveal.
 
-The current prototype records a click immediately in `useGameStore.addClick`, which skips visualisation and validation and misaligns with difficulty rules (GDD §4: Moyen/Hardcore hide or delay the identity card).
+Comparison feeds the **Carte d'identité** only in this slice. **Carte mystère** wiring is a follow-up.
 
 ## Decision
 
-Split interaction state:
+### Interaction
 
-| Phase | State | Effect |
-| ----- | ----- | ------ |
-| Sélection | `selectedNumber: number \| null` | Highlights cell, shows Carte d'identité per difficulty |
-| Validation | encoche on `ElementCell` | Appends to `validatedEssais[]`, runs highlight/shadow, increments `coupCount` |
-| Cancel | deselect / pick another | Clears selection without coup |
+| Input | Effect |
+| ----- | ------ |
+| **Hover** cell | Live preview in `CaseSelectionnee`; Carte d'identité all rows **dimmed** (values visible) |
+| **Click** cell | Commit comparison on that element: matching rows **accent**, rest dimmed — even while pointer stays on the cell |
+| **Mouse leave** grid | Restore last **committed** element (100% + frozen comparison) |
+| **Hover** another cell after commit | Live preview again (75% + preview rows); leave restores commit |
+| **Re-click** same cell | No-op |
 
-Remove direct `addClick` on grid click. The provisional `clicks[]` array will be replaced by `validatedEssais` + `selectedNumber`.
+### Touch (`pointer: coarse`)
+
+**Tap = click** — single tap commits comparison immediately (no hover preview). Acceptable for landscape mobile (GDD responsive constraint).
+
+**Deferred:** two-tap preview-then-commit on touch-only devices (`pointer: coarse`) — same store shape, extra click-branch later.
+
+### Store (`src/store/game.ts`)
+
+| Field | Role |
+| ----- | ------ |
+| `hoveredNumber` | Current grid hover; `null` when pointer off table |
+| `committedNumber` | Last clicked element; persists on mouse leave |
+
+Comparison is **derived at render** from `committedNumber` vs `mysteryNumber` — no cached match set.
+
+**Deferred:** append each new commit to `history[]` when the historique module lands (see ADR-0001).
+
+### Property matching (`propertiesMatch`)
+
+Typed per property — not formatted-string equality:
+
+- Scalars (`period`, `group`, `block`, `family`, `state`, `nutrition`, `discovery`, `stability`): equality on resolved values.
+- **Synthèse** / **Étymologie**: set overlap on raw origins/categories (`getSynthesisOrigins`, `getNameOriginCategories`).
+
+### Identity card row states
+
+`IdentityPropertyState = "match" | "mismatch"` — dimmed rows show values; accent only after commit on that element.
 
 ## Consequences
 
-- `ElementCell` gains an encoche affordance visible during visualisation (hidden in Hardcore until rules say otherwise).
-- `CaseSelectionnee` shows the element under visualisation, not the last validated coup.
-- History module (GDD §3) reads from `validatedEssais`, not raw clicks.
-- Difficulty setting gates when the identity card appears (on select vs on validate vs never).
-- Comparison engine triggers only on validation, feeding the Carte mystère.
+- `PeriodicTable`: `onMouseEnter` / `onMouseLeave` on grid wrapper + per-cell click; remove click-to-select-only flow.
+- `CaseSelectionnee`: shows hovered or committed element at full slot scale (hover scale / commit animation deferred).
+- `CarteIdentite`: row state from hover vs committed comparison mode.
+- `CarteMystere`: unchanged this slice (mock reveals remain).
+- Difficulty modes (§4) and coup counter deferred until encoche or an explicit “commit = coup” rule is restored.
+- Unit tests for `propertiesMatch` (scalar + multi-value overlap cases).

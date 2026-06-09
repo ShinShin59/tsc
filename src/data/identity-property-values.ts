@@ -6,7 +6,7 @@ import { formatNutrition } from "@/data/nutrition";
 import { formatStability } from "@/data/stability";
 import { formatSynthesis } from "@/data/synthesis";
 
-function resolveBlock({ number, group }: Element): string {
+export function resolveElementBlock({ number, group }: Element): string {
   if ((number >= 57 && number <= 71) || (number >= 89 && number <= 103)) {
     return "F-block";
   }
@@ -36,7 +36,7 @@ export function resolveIdentityPropertyValue(
     case "group":
       return String(element.group);
     case "block":
-      return resolveBlock(element);
+      return resolveElementBlock(element);
     case "family":
       return element.category;
     case "state":

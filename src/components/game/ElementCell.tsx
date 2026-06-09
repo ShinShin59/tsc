@@ -7,9 +7,16 @@ type ElementCellProps = {
   selected?: boolean;
   className?: string;
   onClick?: () => void;
+  onMouseEnter?: () => void;
 };
 
-export function ElementCell({ element, selected = false, className, onClick }: ElementCellProps) {
+export function ElementCell({
+  element,
+  selected = false,
+  className,
+  onClick,
+  onMouseEnter,
+}: ElementCellProps) {
   const { backgroundColor, textClass } = cellAppearance(element.category);
 
   return (
@@ -18,6 +25,7 @@ export function ElementCell({ element, selected = false, className, onClick }: E
       aria-label={`${element.name} (${element.symbol})`}
       aria-pressed={selected}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
       className={cn(
         "flex size-(--cell-size) min-w-0 cursor-pointer flex-col rounded-sm border border-black/20 p-0.5 text-left transition-[filter] hover:brightness-110",
         textClass,

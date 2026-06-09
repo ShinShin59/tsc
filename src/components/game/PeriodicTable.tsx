@@ -12,14 +12,19 @@ type PeriodicTableProps = {
 };
 
 export function PeriodicTable({ className }: PeriodicTableProps) {
-  const recordSelection = useGameStore((state) => state.recordSelection);
-  const lastSelected = useGameStore((state) => state.lastSelected);
+  const hoveredNumber = useGameStore((state) => state.hoveredNumber);
+  const committedNumber = useGameStore((state) => state.committedNumber);
+  const setHoveredNumber = useGameStore((state) => state.setHoveredNumber);
+  const commitSelection = useGameStore((state) => state.commitSelection);
   const spacer = Math.round(TABLE_CELL_SIZE * 0.06);
+
+  const highlightedNumber = hoveredNumber ?? committedNumber;
 
   return (
     <div className={cn("overflow-x-auto p-4", className)}>
       <div
         className="mx-auto grid w-fit gap-px"
+        onMouseLeave={() => setHoveredNumber(null)}
         style={
           {
             "--cell-size": `${TABLE_CELL_SIZE}px`,
@@ -32,8 +37,9 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
           <div key={el.number} style={{ gridColumn: el.xpos, gridRow: el.ypos }}>
             <ElementCell
               element={el}
-              selected={el.number === lastSelected}
-              onClick={() => recordSelection(el.number)}
+              selected={el.number === highlightedNumber}
+              onMouseEnter={() => setHoveredNumber(el.number)}
+              onClick={() => commitSelection(el.number)}
             />
           </div>
         ))}

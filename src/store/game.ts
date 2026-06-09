@@ -1,34 +1,31 @@
 import { create } from "zustand";
-import { MAX_ATOMIC_NUMBER } from "@/data/elements";
 import { getDailySeed, mysteryIndexFromSeed } from "@/lib/daily-mystery";
-
-export const MAX_HISTORY = MAX_ATOMIC_NUMBER;
 
 const dailySeed = getDailySeed();
 
 type GameState = {
   dailySeed: string;
   mysteryNumber: number;
-  history: number[];
-  lastSelected: number | null;
-  recordSelection: (elementNumber: number) => void;
+  hoveredNumber: number | null;
+  committedNumber: number | null;
+  setHoveredNumber: (elementNumber: number | null) => void;
+  commitSelection: (elementNumber: number) => void;
 };
 
 export const useGameStore = create<GameState>((set) => ({
   dailySeed,
   mysteryNumber: mysteryIndexFromSeed(dailySeed),
-  history: [],
-  lastSelected: null,
+  hoveredNumber: null,
+  committedNumber: null,
 
-  recordSelection: (elementNumber) =>
+  setHoveredNumber: (elementNumber) => set({ hoveredNumber: elementNumber }),
+
+  commitSelection: (elementNumber) =>
     set((state) => {
-      if (state.lastSelected === elementNumber) {
+      if (state.committedNumber === elementNumber) {
         return state;
       }
 
-      return {
-        history: [...state.history, elementNumber].slice(-MAX_HISTORY),
-        lastSelected: elementNumber,
-      };
+      return { committedNumber: elementNumber };
     }),
 }));

@@ -1,7 +1,9 @@
 import type { CSSProperties } from "react";
-import { elements, PLACEHOLDER_CELLS } from "@/data/periodic-table";
+import { elements, PLACEHOLDER_CELLS } from "@/data/elements";
+import { cellAppearance } from "@/palette/famille";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
+import { TABLE_CELL_SIZE } from "./constants";
 import { ElementCell } from "./ElementCell";
 import { PlaceholderCell } from "./PlaceholderCell";
 
@@ -10,8 +12,9 @@ type PeriodicTableProps = {
 };
 
 export function PeriodicTable({ className }: PeriodicTableProps) {
-  const cellSize = 64;
-  const spacer = Math.round(cellSize * 0.06);
+  const recordSelection = useGameStore((state) => state.recordSelection);
+  const lastSelected = useGameStore((state) => state.lastSelected);
+  const spacer = Math.round(TABLE_CELL_SIZE * 0.06);
 
   return (
     <div className={cn("overflow-x-auto p-4", className)}>
@@ -19,7 +22,7 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
         className="mx-auto grid w-fit gap-px"
         style={
           {
-            "--cell-size": `${cellSize}px`,
+            "--cell-size": `${TABLE_CELL_SIZE}px`,
             gridTemplateColumns: "repeat(18, var(--cell-size))",
             gridTemplateRows: `repeat(7, var(--cell-size)) ${spacer}px repeat(2, var(--cell-size))`,
           } as CSSProperties
@@ -29,14 +32,16 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
           <div key={el.number} style={{ gridColumn: el.xpos, gridRow: el.ypos }}>
             <ElementCell
               element={el}
-              onClick={() => useGameStore.getState().addClick(el.number)}
+              selected={el.number === lastSelected}
+              onClick={() => recordSelection(el.number)}
             />
           </div>
         ))}
-        {PLACEHOLDER_CELLS.map(({ xpos, ypos, ...cell }) => (
+        {PLACEHOLDER_CELLS.map(({ xpos, ypos, category, ...cell }) => (
           <PlaceholderCell
             key={cell.subtitle}
             {...cell}
+            {...cellAppearance(category)}
             style={{ gridColumn: xpos, gridRow: ypos }}
           />
         ))}

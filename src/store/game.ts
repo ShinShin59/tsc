@@ -1,26 +1,30 @@
 import { create } from "zustand";
+import { MAX_ATOMIC_NUMBER } from "@/data/elements";
 
-export const MAX_TRIES = 6;
+export const MAX_HISTORY = MAX_ATOMIC_NUMBER;
 
 type GameState = {
-  clicks: number[];
-  addClick: (elementNumber: number) => void;
+  history: number[];
+  lastSelected: number | null;
+  recordSelection: (elementNumber: number) => void;
   reset: () => void;
 };
 
 export const useGameStore = create<GameState>((set) => ({
-  clicks: [],
+  history: [],
+  lastSelected: null,
 
-  addClick: (elementNumber) =>
+  recordSelection: (elementNumber) =>
     set((state) => {
-      if (state.clicks.at(-1) === elementNumber) {
+      if (state.lastSelected === elementNumber) {
         return state;
       }
 
-      const clicks = [...state.clicks, elementNumber].slice(-MAX_TRIES);
-      console.log("clicks:", clicks);
-      return { clicks };
+      return {
+        history: [...state.history, elementNumber].slice(-MAX_HISTORY),
+        lastSelected: elementNumber,
+      };
     }),
 
-  reset: () => set({ clicks: [] }),
+  reset: () => set({ history: [], lastSelected: null }),
 }));

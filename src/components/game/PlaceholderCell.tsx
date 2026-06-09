@@ -1,8 +1,10 @@
 import type { CSSProperties } from "react";
-import type { PlaceholderCellData } from "@/data/periodic-table";
+import type { CellAppearance } from "@/palette/famille";
 import { cn } from "@/lib/utils";
 
-type PlaceholderCellProps = PlaceholderCellData & {
+type PlaceholderCellProps = CellAppearance & {
+  label: string;
+  subtitle: string;
   className?: string;
   style?: CSSProperties;
 };

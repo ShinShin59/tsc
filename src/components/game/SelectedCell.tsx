@@ -1,20 +1,21 @@
 import type { CSSProperties } from "react";
-import { elements } from "@/data/periodic-table";
+import { getElement } from "@/data/elements";
 import { useGameStore } from "@/store/game";
+import {
+  SELECTED_CELL_SCALE,
+  SELECTED_CELL_SIZE,
+  TABLE_CELL_SIZE,
+} from "./constants";
 import { ElementCell } from "./ElementCell";
 
-const TABLE_CELL_SIZE = 64;
-const SELECTED_SIZE = 100;
-const SCALE = SELECTED_SIZE / TABLE_CELL_SIZE;
-
 export function SelectedCell() {
-  const lastNumber = useGameStore((state) => state.clicks.at(-1));
-  const element = lastNumber ? elements.find((el) => el.number === lastNumber) : undefined;
+  const lastSelected = useGameStore((state) => state.lastSelected);
+  const element = lastSelected ? getElement(lastSelected) : undefined;
 
   return (
     <div
       className="pointer-events-none absolute top-0 left-[20%] z-10"
-      style={{ width: SELECTED_SIZE, height: SELECTED_SIZE }}
+      style={{ width: SELECTED_CELL_SIZE, height: SELECTED_CELL_SIZE }}
       aria-label={element ? `Élément sélectionné : ${element.name}` : "Aucun élément sélectionné"}
     >
       {element ? (
@@ -28,13 +29,14 @@ export function SelectedCell() {
               {
                 width: TABLE_CELL_SIZE,
                 height: TABLE_CELL_SIZE,
-                transform: `scale(${SCALE})`,
+                transform: `scale(${SELECTED_CELL_SCALE})`,
                 "--cell-size": `${TABLE_CELL_SIZE}px`,
               } as CSSProperties
             }
           >
             <ElementCell
               element={element}
+              selected
               className="cursor-default hover:brightness-100"
             />
           </div>

@@ -5,7 +5,7 @@ export function Legende() {
   return (
     <aside
       aria-label="Légende des propriétés"
-      className="w-fit shrink-0 border-t border-white/20 bg-[#2d3e47]/95 px-3 py-1.5 ml-auto"
+      className="w-fit shrink-0 border-3 border-accent px-3 py-1.5 m-auto mb-2"
     >
       <ul className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
         {LEGENDE_ITEMS.map(({ id, label, icon, description }) => (

@@ -15,14 +15,14 @@ French is the primary UI language. Code identifiers and types stay in English.
 | **Essai** | A selection that may or may not yet be validated | Attempt (prefer **essai** in history context) |
 | **Mode entraînement** | Post-daily practice with random seed, unlimited replays | Practice mode, sandbox |
 
-## Selection flow (GDD §2)
+## Selection flow (ADR-0003; GDD §2 encoche deferred)
 
 | Term | Definition | Aliases to avoid |
 | ---- | ---------- | ---------------- |
-| **Sélection** | Player picks a case on the tableau | Click, pick |
-| **Visualisation** | Carte d'identité shown for consultation before committing | Preview, inspect |
-| **Validation** | Player confirms via **encoche** (checkmark); triggers comparison and increments coup counter | Submit, confirm |
-| **Encoche** | Checkmark button on the element cell for validation | Check button, tick |
+| **Survol** | Pointer over a cell — browse Carte d'identité without committing | Hover |
+| **Visualisation** | Carte d'identité preview (all properties dimmed, values visible) | Preview, inspect |
+| **Commit** | Grid click runs comparison vs mystery (`commitSelection` in code) | Validation (GDD encoche deferred) |
+| **Encoche** | GDD checkmark validation — **not implemented**; click commits instead | Check button, tick |
 
 ## Identity card & comparison
 
@@ -30,9 +30,17 @@ French is the primary UI language. Code identifiers and types stay in English.
 | ---- | ---------- | ---------------- |
 | **Carte d'identité** | Property panel for the selected/validated element | Identity card, profile |
 | **Carte mystère** | Summary card for the mystery element; properties lock in as matches are discovered | Mystery card, target card |
-| **Highlight** (surbrillance) | Property value matches mystery element — illuminates on card | Match, green, similar |
-| **Shadow** (ombre) | Property value differs from mystery — greyed or recessed | Mismatch, dim, different |
+| **Highlight** (surbrillance) | Property value matches mystery element — accent on identity card | Green, similar |
+| **Shadow** (ombre) | Property value differs from mystery — dimmed on identity card | Dim, different |
 | **Jauge de correspondance** | Percentage gauge of overall property overlap with mystery | Match %, proximity score |
+
+### Code identifiers (identity card)
+
+| Code | Domain term | When |
+| ---- | ----------- | ---- |
+| `IdentityPropertyState.match` | Highlight | After commit, property in common with mystery |
+| `IdentityPropertyState.mismatch` | Shadow (or undifferentiated preview) | After commit, no match; also all rows while hovering |
+| `propertiesMatch()` | Comparison engine | Typed per-property check vs mystery |
 
 ## Identity-card properties
 
@@ -98,6 +106,7 @@ Normalized synthesis classes (GDD §5): Big Bang, étoiles mourantes, fusion d'�
 
 | Term | Definition | Aliases to avoid |
 | ---- | ---------- | ---------------- |
-| **Seed** | `YYYY-MM-DD` string for daily mystery index; random for training | Random seed (qualify which mode) |
-| **clicks** | Current store field — **provisional**; will split into selection vs validated coups | tries, guesses |
-| **Element** | Typed record in `periodic-table.ts`; must grow to full identity-card dataset | Atom, element data |
+| **Seed** | `YYYY-MM-DD` Paris calendar day for daily mystery; random for training | Random seed (qualify which mode) |
+| **hoveredNumber** | Store: element under pointer on grid; `null` off table | hover state |
+| **committedNumber** | Store: last clicked element; comparison frozen until next commit | last selection |
+| **commitSelection** | Store action: run comparison on click; hook for future `history[]` | validate, encoche |

@@ -21,7 +21,7 @@ Comparison feeds the **Carte d'identité** only in this slice. **Carte mystère*
 | **Hover** cell | Live preview in `CaseSelectionnee`; Carte d'identité all rows **dimmed** (values visible) |
 | **Click** cell | Commit comparison on that element: matching rows **accent**, rest dimmed — even while pointer stays on the cell |
 | **Mouse leave** grid | Restore last **committed** element (100% + frozen comparison) |
-| **Hover** another cell after commit | Live preview again (75% + preview rows); leave restores commit |
+| **Hover** another cell after commit | Live preview again (dimmed rows); leave restores commit |
 | **Re-click** same cell | No-op |
 
 ### Touch (`pointer: coarse`)

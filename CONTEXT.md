@@ -13,17 +13,17 @@
 - Nucleosynthesis: cosmic origins (Big Bang, neutron-star merger, etc.)
 - Intrinsic properties: matter state, nuclear stability, etymology
 
-## Target game loop (GDD §2)
+## Target game loop (ADR-0003; GDD §2 encoche deferred)
 
-Strict three-step flow — selection alone must **not** count as a coup:
+Hover → browse, click → compare against l'élément mystère:
 
 ```
-1. Sélection    → player picks a cell on the tableau
-2. Visualisation → Carte d'identité appears for consultation
-3. Validation   → player confirms via encoche (checkmark) on the element
-                  → comparison engine runs vs élément mystère
-                  → coup counter increments
+1. Survol       → Carte d'identité preview (all properties dimmed, values visible)
+2. Clic         → comparison vs élément mystère (Highlight / Shadow on identity card)
+3. (Later)      → coup counter, historique, Carte mystère lock-in
 ```
+
+> _GDD §2 originally required encoche before comparison — superseded by ADR-0003 for the prototype._
 
 ### Comparison engine (triangulation)
 
@@ -31,8 +31,8 @@ For each property on the validated element vs the mystery element:
 
 | Result | UI term | Behaviour |
 | ------ | ------- | --------- |
-| Same value | **Highlight** (surbrillance) | Property illuminates on the identity card |
-| Different value | **Shadow** (ombre) | Property stays greyed / recessed |
+| Same value | **Highlight** (surbrillance) | `match` in code — accent on identity card |
+| Different value | **Shadow** (ombre) | `mismatch` in code — dimmed on identity card |
 | Discovered match | **Carte mystère** | Matching properties lock onto the mystery summary card |
 
 Each validated coup narrows the search space — the core **triangulation** loop.
@@ -41,7 +41,7 @@ Each validated coup narrows the search space — the core **triangulation** loop
 
 | Mode | Seed | When |
 | ---- | ---- | ---- |
-| **Daily** | `YYYY-MM-DD` (client-side) | One shared mystery element worldwide; rotates at 00:00 |
+| **Daily** | `YYYY-MM-DD` (Europe/Paris, client-side) | One shared mystery element; rotates at Paris midnight |
 | **Entraînement** | Random | Unlocked after solving the daily element; unlimited practice |
 
 No server required for daily sync — seed-derived index into elements 1–118.
@@ -56,9 +56,9 @@ React 19, TypeScript, Vite 8, Tailwind CSS 4, Zustand, Base UI, Lucide. GitHub P
 App
 ├── Header          — title + overlays (stats, help, info, settings)
 └── Game
-    ├── PeriodicTable   — 18-column grid, ElementCell + PlaceholderCell
-    ├── CaseSelectionnee  — enlarged preview during visualisation
-    ├── CarteIdentite     — identity card for selected element
+    ├── PeriodicTable   — 18-column grid, ElementCell (hover + click)
+    ├── CaseSelectionnee  — enlarged cell preview (hover or last commit)
+    ├── CarteIdentite     — identity card; Highlight/Shadow via match/mismatch
     ├── CaseMystere       — mystery element placeholder
     ├── CarteMystere      — mystery card (discovered properties)
     └── Legende         — property-type legend strip
@@ -66,8 +66,8 @@ App
 
 ### Data layer
 
-- `src/data/periodic-table.ts` — `PeriodicTableJSON.json` → `Element` records with category colours and grid positions. **Missing GDD fields:** bloc, état, synthèse, stabilité, étymologie, CHNOPS, discovery date.
-- `src/store/game.ts` — Zustand: `clicks[]` (last 6 atomic numbers), `addClick`, `reset`. **Diverges from GDD:** click immediately records a coup; no select → visualize → validate flow.
+- `src/data/elements.ts` — `PeriodicTableJSON.json` → `Element` records; enriched identity fields via `src/data/enriched/`.
+- `src/store/game.ts` — Zustand: `dailySeed`, `mysteryNumber`, `hoveredNumber`, `committedNumber`, `commitSelection`.
 
 ### UI primitives
 
@@ -101,18 +101,17 @@ App
 | Area | Status | GDD alignment |
 | ---- | ------ | ------------- |
 | Periodic table grid (118 elements) | Done | Famille palette only |
-| Click → immediate `clicks` record | Done | **Diverges** — should be select-only until encoche |
-| CaseSelectionnee enlarged preview | Prototype | Maps to visualisation step, not validation |
-| Legende property strip | UI shell | Not wired to identity cards or palettes |
-| Encoche validation button | Not started | §2 core mechanic |
-| Carte d'identité + highlight/shadow | Not started | §2 |
-| Carte mystère (discovered properties) | Prototype | Presentation mock; wire to comparison engine |
-| Date-seed daily mystery | Not started | §5 |
+| Hover preview + click comparison | Done | ADR-0003 (GDD encoche deferred) |
+| Daily mystery (Paris date seed) | Done | ADR-0002 |
+| CaseSelectionnee enlarged preview | Done | Hover or last commit |
+| Legende property strip | UI shell | Not wired to palette modes |
+| Carte d'identité Highlight/Shadow | Done | Identity card only |
+| Carte mystère (discovered properties) | Prototype | Mock reveals; wire on commit later |
+| Encoche validation | Deferred | Superseded by click-to-compare (ADR-0003) |
 | History + hover replay | Not started | §3 |
 | Compteur / jauge / histogramme | Not started | §3 |
 | Colour palette modes | Not started | §3 |
 | Difficulty levels + toggles | Not started | §4 |
-| PubChem + NASA enriched dataset | Not started | §5 |
 | LocalStorage session persistence | Not started | §6 future |
 | Training mode (post-daily) | Not started | §6 future |
 
@@ -126,9 +125,11 @@ App
 | Path | Role |
 | ---- | ---- |
 | `docs/reus/1-08-06-26.md` | GDD — mechanics, UI spec, data, difficulty |
-| `src/store/game.ts` | Game state — needs validation flow, mystery seed, history |
-| `src/data/periodic-table.ts` | Element model — extend with identity-card properties |
-| `src/components/game/ElementCell.tsx` | Cell + future encoche button |
+| `src/store/game.ts` | Game state — mystery seed, hover/commit comparison |
+| `src/lib/properties-match.ts` | Typed property comparison vs mystery |
+| `src/lib/daily-mystery.ts` | Paris date seed → mystery index |
+| `src/data/elements.ts` | Element model + grid positions |
+| `src/components/game/ElementCell.tsx` | Table cell (hover + click) |
 | `src/components/game/Legende.tsx` | Property legend; palette mode selector candidate |
 | `src/components/Header.tsx` | Overlay coordination |
 
@@ -137,7 +138,7 @@ App
 - French UI copy; English code identifiers.
 - Atomic numbers 1-based. Grid positions 1-based (`xpos`, `ypos`).
 - Path alias `@/` → `src/`.
-- Use GDD terms (highlight/shadow, encoche, triangulation) in issues and docs.
+- Use GDD terms (Highlight/Shadow, triangulation) in issues and docs; code uses `match`/`mismatch` (see `UBIQUITOUS_LANGUAGE.md`).
 
 ## Related docs
 

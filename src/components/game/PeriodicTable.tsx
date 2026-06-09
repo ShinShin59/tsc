@@ -1,11 +1,9 @@
 import type { CSSProperties } from "react";
-import { elements, PLACEHOLDER_CELLS } from "@/data/elements";
-import { cellAppearance } from "@/palette/famille";
+import { elements } from "@/data/elements";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 import { TABLE_CELL_SIZE } from "./constants";
 import { ElementCell } from "./ElementCell";
-import { PlaceholderCell } from "./PlaceholderCell";
 
 type PeriodicTableProps = {
   className?: string;
@@ -42,14 +40,6 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
               onClick={() => commitSelection(el.number)}
             />
           </div>
-        ))}
-        {PLACEHOLDER_CELLS.map(({ xpos, ypos, category, ...cell }) => (
-          <PlaceholderCell
-            key={cell.subtitle}
-            {...cell}
-            {...cellAppearance(category)}
-            style={{ gridColumn: xpos, gridRow: ypos }}
-          />
         ))}
       </div>
     </div>

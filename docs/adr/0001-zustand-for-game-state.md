@@ -18,7 +18,7 @@ Header overlay state stays in `Header` until another module needs it.
 
 ## Consequences
 
-- `PeriodicTable` currently calls `addClick` on cell click — **temporary**; GDD requires select → visualize → validate (encoche) before recording a coup (see ADR-0003).
+- `PeriodicTable`: hover → `setHoveredNumber`, click → `commitSelection` (see ADR-0003).
 - `CaseSelectionnee` subscribes for visualisation preview.
 - Daily mystery: `dailySeed`, `mysteryNumber` (see ADR-0002).
 - Comparison (ADR-0003): `hoveredNumber` + `committedNumber`; match/mismatch derived at render — no cached comparison set.

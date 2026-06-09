@@ -27,6 +27,11 @@ describe("propertiesMatch", () => {
     expect(compareElements(thorium, uranium, "synthesis")).toBe(true);
   });
 
+  it("uses etymology category overlap", () => {
+    expect(propertiesMatch(2, 63, "etymology")).toBe(true);
+    expect(propertiesMatch(2, 1, "etymology")).toBe(false);
+  });
+
   it("returns false when an element number is unknown", () => {
     expect(propertiesMatch(999, 26, "period")).toBe(false);
   });

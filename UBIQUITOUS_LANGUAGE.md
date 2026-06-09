@@ -59,7 +59,7 @@ Normalized synthesis classes (GDD §5): Big Bang, étoiles mourantes, fusion d'�
 | **Case** | One grid slot (element or placeholder) | Cell, tile |
 | **Case élément** | Clickable `ElementCell` | Element tile |
 | **Case fantôme** | Range label for lanthanides (57–71) or actinides (89–103) | Placeholder |
-| **Case sélectionnée** | Enlarged preview during visualisation (`SelectedCell`) | Selected cell, zoom |
+| **Case sélectionnée** | Enlarged preview during visualisation (`CaseSelectionnee`) | Selected cell, zoom |
 | **Division diagonale** | Split cell colouring when an element has multiple palette values | Split cell, dual colour |
 | **Légende** | Property-type or palette legend strip (`Legende`) | Legend |
 

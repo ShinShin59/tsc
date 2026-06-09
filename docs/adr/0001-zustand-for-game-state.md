@@ -19,7 +19,7 @@ Header overlay state stays in `Header` until another module needs it.
 ## Consequences
 
 - `PeriodicTable` currently calls `addClick` on cell click — **temporary**; GDD requires select → visualize → validate (encoche) before recording a coup (see ADR-0003).
-- `SelectedCell` subscribes for visualisation preview.
+- `CaseSelectionnee` subscribes for visualisation preview.
 - Future slices: `mysteryNumber`, `validatedEssais[]`, `discoveredProperties`, `difficulty`, `paletteMode`, daily/training seed.
 - Settings affecting gameplay (difficulty, toggles) move from `SettingsButton` local state into the store when wired.
 - LocalStorage persistence (GDD §6) layers on top of this store later — not in scope yet.

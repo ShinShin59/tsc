@@ -57,7 +57,10 @@ App
 ├── Header          — title + overlays (stats, help, info, settings)
 └── Game
     ├── PeriodicTable   — 18-column grid, ElementCell + PlaceholderCell
-    ├── SelectedCell    — enlarged preview of last interaction (provisional)
+    ├── CaseSelectionnee  — enlarged preview during visualisation
+    ├── CarteIdentite     — identity card for selected element
+    ├── CaseMystere       — mystery element placeholder
+    ├── CarteMystere      — mystery card (discovered properties)
     └── Legende         — property-type legend strip
 ```
 
@@ -99,11 +102,11 @@ App
 | ---- | ------ | ------------- |
 | Periodic table grid (118 elements) | Done | Famille palette only |
 | Click → immediate `clicks` record | Done | **Diverges** — should be select-only until encoche |
-| SelectedCell enlarged preview | Prototype | Maps to visualisation step, not validation |
+| CaseSelectionnee enlarged preview | Prototype | Maps to visualisation step, not validation |
 | Legende property strip | UI shell | Not wired to identity cards or palettes |
 | Encoche validation button | Not started | §2 core mechanic |
 | Carte d'identité + highlight/shadow | Not started | §2 |
-| Carte mystère (discovered properties) | Not started | §2 |
+| Carte mystère (discovered properties) | Prototype | Presentation mock; wire to comparison engine |
 | Date-seed daily mystery | Not started | §5 |
 | History + hover replay | Not started | §3 |
 | Compteur / jauge / histogramme | Not started | §3 |

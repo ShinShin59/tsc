@@ -9,7 +9,7 @@ export function CarteIdentite() {
   const element = lastSelected ? getElement(lastSelected) : undefined;
 
   return (
-    <aside aria-label="Carte d'identité" className="flex flex-col">
+    <aside aria-label="Carte d'identité" className="flex flex-col w-[175px]">
       <ul className="flex flex-col gap-y-0.5">
         {LEGENDE_ITEMS.map(({ id, icon }) => (
           <CarteIdentiteRow

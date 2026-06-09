@@ -29,7 +29,7 @@ Remove direct `addClick` on grid click. The provisional `clicks[]` array will be
 ## Consequences
 
 - `ElementCell` gains an encoche affordance visible during visualisation (hidden in Hardcore until rules say otherwise).
-- `SelectedCell` shows the element under visualisation, not the last validated coup.
+- `CaseSelectionnee` shows the element under visualisation, not the last validated coup.
 - History module (GDD §3) reads from `validatedEssais`, not raw clicks.
 - Difficulty setting gates when the identity card appears (on select vs on validate vs never).
 - Comparison engine triggers only on validation, feeding the Carte mystère.

@@ -1,3 +1,3 @@
 export const TABLE_CELL_SIZE = 64;
-export const SELECTED_CELL_SIZE = 200;
+export const SELECTED_CELL_SIZE = 150;
 export const SELECTED_CELL_SCALE = SELECTED_CELL_SIZE / TABLE_CELL_SIZE;

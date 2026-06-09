@@ -8,13 +8,12 @@ import {
 } from "./constants";
 import { ElementCell } from "./ElementCell";
 
-export function SelectedCell() {
+export function CaseSelectionnee() {
   const lastSelected = useGameStore((state) => state.lastSelected);
   const element = lastSelected ? getElement(lastSelected) : undefined;
 
   return (
     <div
-      className=""
       style={{ width: SELECTED_CELL_SIZE, height: SELECTED_CELL_SIZE }}
       aria-label={element ? `Élément sélectionné : ${element.name}` : "Aucun élément sélectionné"}
     >

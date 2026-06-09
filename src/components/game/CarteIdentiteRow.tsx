@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export type CarteIdentiteRowState = "on" | "off";
+export type CarteIdentiteRowState = "off" | "revealed" | "hidden";
 
 type CarteIdentiteRowProps = {
   icon: string;
@@ -10,6 +10,7 @@ type CarteIdentiteRowProps = {
 
 export function CarteIdentiteRow({ icon, value, state = "off" }: CarteIdentiteRowProps) {
   const isOff = state === "off";
+  const isHidden = state === "hidden";
 
   return (
     <li className="flex items-center gap-x-1.5">
@@ -17,15 +18,21 @@ export function CarteIdentiteRow({ icon, value, state = "off" }: CarteIdentiteRo
         src={icon}
         alt=""
         aria-hidden
-        className={cn("size-[19px] shrink-0 object-contain", isOff && "brightness-0 opacity-30")}
+        className={cn(
+          "size-[19px] shrink-0 object-contain",
+          (isOff || isHidden) && "brightness-0 opacity-30",
+        )}
       />
       <span
         className={cn(
-          "text-[12px] font-bold leading-none",
-          isOff ? "text-black/35" : "text-[#a8d8ea]",
+          "min-w-0 truncate text-[12px] font-bold leading-none",
+          isOff && "text-black/35",
+          state === "revealed" && "text-accent",
+          isHidden && "text-accent/50",
         )}
+        title={isHidden ? undefined : value}
       >
-        {value}
+        {isHidden ? "?" : value}
       </span>
     </li>
   );

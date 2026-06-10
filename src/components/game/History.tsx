@@ -3,13 +3,7 @@ import { countMatchingProperties } from "@/data/properties";
 import { resolvePaletteAppearance } from "@/palette/index";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
-import {
-  HISTORY_CELL_SIZE,
-  HISTORY_GAP,
-  HISTORY_GAUGE_HEIGHT,
-  HISTORY_GAUGE_WIDTH,
-  HISTORY_VISIBLE_COUNT,
-} from "./const";
+import { HISTORY_VISIBLE_COUNT } from "./const";
 
 function HistoryTile({
   elementNumber,
@@ -33,26 +27,21 @@ function HistoryTile({
       role="img"
       aria-label={`${element.name} (${element.symbol})`}
       onMouseEnter={onMouseEnter}
-      className="flex shrink-0 cursor-default flex-col items-center gap-0.5"
+      className="flex shrink cursor-default flex-col items-center gap-px"
     >
       <div
         className={cn(
-          "flex items-center justify-center rounded-sm border border-black/20 text-xs font-bold leading-none transition-[filter] hover:brightness-110",
+          "flex size-5 items-center justify-center rounded-sm border border-black/20 text-[9px] font-bold leading-none transition-[filter] hover:brightness-110 sm:size-6 sm:text-[10px]",
           textClass,
         )}
-        style={{
-          width: HISTORY_CELL_SIZE,
-          height: HISTORY_CELL_SIZE,
-          backgroundColor,
-        }}
+        style={{ backgroundColor }}
       >
         {element.symbol}
       </div>
 
       <div
         aria-hidden
-        className="relative overflow-hidden rounded-sm border border-white/40 bg-black/20"
-        style={{ width: HISTORY_GAUGE_WIDTH, height: HISTORY_GAUGE_HEIGHT }}
+        className="relative h-3 w-1.5 overflow-hidden rounded-sm border border-white/40 bg-black/20 sm:h-4 sm:w-2"
       >
         <div
           className="absolute inset-x-0 bottom-0 bg-sky-400"
@@ -63,11 +52,7 @@ function HistoryTile({
   );
 }
 
-type HistoryProps = {
-  className?: string;
-};
-
-export function History({ className }: HistoryProps) {
+export function History() {
   const history = useGameStore((state) => state.history);
   const mysteryNumber = useGameStore((state) => state.mysteryNumber);
   const setHoveredNumber = useGameStore((state) => state.setHoveredNumber);
@@ -82,8 +67,7 @@ export function History({ className }: HistoryProps) {
   return (
     <div
       aria-label="Historique des coups"
-      className={cn("flex justify-center overflow-x-auto", className)}
-      style={{ gap: HISTORY_GAP }}
+      className="flex min-w-0 shrink gap-0.5"
       onMouseLeave={() => setHoveredNumber(null)}
     >
       {visible.map((elementNumber, index) => (

@@ -9,13 +9,13 @@ type LegendProps = {
 export function Legend({ className }: LegendProps) {
   return (
     <aside aria-label="Légende des propriétés" className={cn("min-w-0", className)}>
-      <ul className="flex flex-nowrap items-center gap-x-3 overflow-x-auto py-0.5 [scrollbar-width:thin]">
+      <ul className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5">
         {LEGEND_ITEMS.map(({ id, label, icon, description }) => (
-          <li key={id} className="shrink-0">
+          <li key={id}>
             <Tooltip>
               <TooltipTrigger render={<span className="flex cursor-default items-center gap-1" />}>
-                <img src={icon} alt="" aria-hidden className="h-[19px] w-auto shrink-0" />
-                <span className="text-[11px] text-amber-200/90">{label}</span>
+                <img src={icon} alt="" aria-hidden className="size-4 shrink-0 sm:size-[19px]" />
+                <span className="hidden text-[11px] text-amber-200/90 xl:inline">{label}</span>
               </TooltipTrigger>
               <TooltipContent side="top">{description}</TooltipContent>
             </Tooltip>

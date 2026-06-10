@@ -3,12 +3,29 @@ import { elements } from "@/data/elements";
 import { canCommit, resolveDisplayNumber } from "@/lib/rules";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
-import { TABLE_CELL_MAX_SIZE } from "./const";
+import {
+  TABLE_CELL_MAX_SIZE,
+  TABLE_COLUMNS,
+  TABLE_COLUMN_GAPS,
+  TABLE_LANTHANIDE_GAP_FRACTION,
+  TABLE_ROW_GAPS,
+  TABLE_ROW_SIZE_UNITS,
+} from "./const";
 import { ElementCell } from "./ElementCell";
 
 type PeriodicTableProps = {
   className?: string;
 };
+
+const tableGridStyle = {
+  "--table-cell-max": `${TABLE_CELL_MAX_SIZE}px`,
+  "--cell-from-width": `calc((100cqw - ${TABLE_COLUMN_GAPS}px) / ${TABLE_COLUMNS})`,
+  "--cell-from-height": `calc((100cqh - ${TABLE_ROW_GAPS}px) / ${TABLE_ROW_SIZE_UNITS})`,
+  "--cell-size":
+    "min(var(--table-cell-max), var(--cell-from-width), var(--cell-from-height))",
+  gridTemplateColumns: "repeat(18, var(--cell-size))",
+  gridTemplateRows: `repeat(7, var(--cell-size)) calc(var(--cell-size) * ${TABLE_LANTHANIDE_GAP_FRACTION}) repeat(2, var(--cell-size))`,
+} as CSSProperties;
 
 export function PeriodicTable({ className }: PeriodicTableProps) {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
@@ -20,19 +37,16 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
   const highlightedNumber = resolveDisplayNumber({ hoveredNumber, committedNumber });
 
   return (
-    <div className={cn("@container min-h-0 overflow-auto px-2 py-2", className)}>
+    <div
+      className={cn(
+        "[container-type:size] flex h-full min-h-0 items-center justify-center overflow-hidden p-1 sm:p-2",
+        className,
+      )}
+    >
       <div
-        className="mx-auto grid w-full gap-px"
+        className="grid shrink-0 gap-px"
         onMouseLeave={() => setHoveredNumber(null)}
-        style={
-          {
-            "--table-cell-max": `${TABLE_CELL_MAX_SIZE}px`,
-            "--cell-size": "min(var(--table-cell-max), calc((100cqw - 17px) / 18))",
-            gridTemplateColumns: "repeat(18, var(--cell-size))",
-            gridTemplateRows:
-              "repeat(7, var(--cell-size)) calc(var(--cell-size) * 0.06) repeat(2, var(--cell-size))",
-          } as CSSProperties
-        }
+        style={tableGridStyle}
       >
         {elements.map((el) => (
           <div key={el.number} style={{ gridColumn: el.xpos, gridRow: el.ypos }}>

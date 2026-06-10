@@ -125,6 +125,10 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
+  body {
+    @apply h-dvh overflow-hidden font-sans;
+  }
   body {
     @apply text-white;
     background-color: var(--color-harbor);
@@ -132,8 +136,5 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-  }
-  html {
-    @apply font-sans;
   }
 }

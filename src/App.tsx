@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 function App() {
   return (
     <TooltipProvider>
-      <div className="mx-auto flex h-dvh max-w-7xl flex-col">
+      <div className="mx-auto flex h-dvh max-w-7xl flex-col overflow-hidden">
         <Header />
         <Game />
       </div>

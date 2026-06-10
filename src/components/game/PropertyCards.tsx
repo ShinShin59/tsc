@@ -54,19 +54,19 @@ function PropertyCardRow({ icon, value, state = "mismatch" }: Omit<PropertyCardR
   const isUndiscovered = state === "undiscovered";
 
   return (
-    <li className="flex items-center gap-x-1.5">
+    <li className="flex items-center gap-x-1">
       <img
         src={icon}
         alt=""
         aria-hidden
         className={cn(
-          "size-4 shrink-0 object-contain sm:size-[19px]",
+          "size-3.5 shrink-0 object-contain sm:size-4",
           (isDimmed || isUndiscovered) && "brightness-0 opacity-30",
         )}
       />
       <span
         className={cn(
-          "min-w-0 truncate text-[11px] font-bold leading-none sm:text-[12px]",
+          "min-w-0 truncate text-[10px] font-bold leading-none sm:text-[11px]",
           state === "match" && "text-accent",
           isDimmed && "text-black/35",
           state === "discovered" && "text-accent",
@@ -82,7 +82,7 @@ function PropertyCardRow({ icon, value, state = "mismatch" }: Omit<PropertyCardR
 
 function PropertyCardList({ rows }: { rows: PropertyCardRow[] }) {
   return (
-    <ul className="flex flex-col gap-y-0.5">
+    <ul className="flex flex-col gap-px sm:gap-0.5">
       {rows.map(({ id, icon, value, state }) => (
         <PropertyCardRow key={id} icon={icon} value={value} state={state} />
       ))}
@@ -90,7 +90,7 @@ function PropertyCardList({ rows }: { rows: PropertyCardRow[] }) {
   );
 }
 
-const cardClassName = "flex w-[120px] flex-col sm:w-[140px] md:w-[175px]";
+const cardClassName = "flex w-[88px] flex-col sm:w-[104px] md:w-[120px]";
 
 export function IdentityCard() {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
@@ -106,11 +106,12 @@ export function IdentityCard() {
     committedNumber,
     history,
   });
-  const rows = buildPropertyRows(element, { mode: "identity", mysteryNumber, showComparison });
 
   if (!element) {
-    return <div aria-hidden className={cn(cardClassName, "invisible")} />;
+    return null;
   }
+
+  const rows = buildPropertyRows(element, { mode: "identity", mysteryNumber, showComparison });
 
   return (
     <aside aria-label="Carte d'identité" className={cardClassName}>

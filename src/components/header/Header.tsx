@@ -29,8 +29,11 @@ export function Header() {
   };
 
   return (
-    <header className="relative shrink-0 px-2 pb-2 md:pb-4">
-      <nav className="flex items-center justify-end gap-1 py-1" aria-label="Actions">
+    <header className="relative shrink-0 px-2 pb-1 pt-8 sm:pb-2 sm:pt-9">
+      <nav
+        className="absolute right-1 top-1 flex items-center gap-1 sm:right-2"
+        aria-label="Actions"
+      >
         <StatsButton
           open={activeOverlay === "stats"}
           onOpen={() => openOverlay("stats")}
@@ -53,22 +56,22 @@ export function Header() {
         />
       </nav>
 
-      <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-4">
+      <div className="flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-3">
         <img
           src={loupeSrc}
           alt=""
           aria-hidden
-          className="h-16 w-16 shrink-0 sm:h-20 sm:w-20 md:h-24 md:w-24"
+          className="h-12 w-12 shrink-0 sm:h-16 sm:w-16 md:h-20 md:w-20"
         />
         <div className="flex flex-col items-center text-center">
           <h1>
             <img
               src={titreSrc}
               alt="Élémentaire"
-              className="h-auto w-52 sm:w-64 md:w-80 lg:max-w-2xl"
+              className="h-auto w-44 sm:w-56 md:w-72 lg:max-w-xl"
             />
           </h1>
-          <h2 className="max-w-full text-lg font-bold text-accent sm:text-xl md:text-2xl lg:text-4xl">
+          <h2 className="max-w-full text-base font-bold text-accent sm:text-lg md:text-xl lg:text-2xl">
             {subtitle}
           </h2>
         </div>

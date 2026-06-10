@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 import { ElementCell } from "./ElementCell";
 
-const slotClassName = "size-20 shrink-0 sm:size-28 md:size-36";
+const slotClassName = "size-16 shrink-0 sm:size-20 md:size-24";
 
 export function SelectedCell() {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
@@ -28,7 +28,7 @@ export function SelectedCell() {
           style={{ "--cell-size": "100%" } as CSSProperties}
         />
       ) : (
-        <div className="flex size-full items-center justify-center rounded-sm border border-white/40 text-xl font-bold text-white/50 sm:text-2xl" />
+        <div className="flex size-full items-center justify-center rounded-sm border border-white/40 text-lg font-bold text-white/50 sm:text-xl" />
       )}
     </div>
   );
@@ -49,7 +49,7 @@ export function MysterySlot() {
         )}
         aria-label="Élément mystère"
       >
-        <span className="text-4xl font-bold leading-none text-accent sm:text-5xl md:text-7xl">?</span>
+        <span className="text-3xl font-bold leading-none text-accent sm:text-4xl md:text-5xl">?</span>
       </div>
     );
   }
@@ -66,7 +66,7 @@ export function MysterySlot() {
       style={{ backgroundColor }}
       aria-label={`Élément mystère : ${element.name} (${element.symbol})`}
     >
-      <span className="text-4xl font-bold leading-none sm:text-5xl md:text-7xl">{element.symbol}</span>
+      <span className="text-3xl font-bold leading-none sm:text-4xl md:text-5xl">{element.symbol}</span>
     </div>
   );
 }

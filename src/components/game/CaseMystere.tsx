@@ -1,4 +1,5 @@
 import { getElement } from "@/data/elements";
+import { isCaseMystereRevealed } from "@/lib/partie";
 import { cellAppearance } from "@/palette/famille";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
@@ -8,7 +9,7 @@ export function CaseMystere() {
   const partieStatus = useGameStore((state) => state.partieStatus);
   const mysteryNumber = useGameStore((state) => state.mysteryNumber);
   const element = getElement(mysteryNumber);
-  const revealed = partieStatus !== "playing" && element;
+  const revealed = isCaseMystereRevealed(partieStatus) && element;
 
   if (!revealed) {
     return (

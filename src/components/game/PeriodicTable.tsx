@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { elements } from "@/data/elements";
 import { resolveDisplayNumber } from "@/lib/triangulation-view";
+import { canCommitCoup } from "@/lib/partie";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 import { TABLE_CELL_SIZE } from "./constants";
@@ -40,7 +41,7 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
               selected={el.number === highlightedNumber}
               onMouseEnter={() => setHoveredNumber(el.number)}
               onClick={() => {
-                if (partieStatus === "playing") {
+                if (canCommitCoup(partieStatus)) {
                   commitSelection(el.number);
                 }
               }}

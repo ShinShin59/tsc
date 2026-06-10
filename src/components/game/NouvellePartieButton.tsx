@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { shouldConfirmAbandon } from "@/lib/partie";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 
@@ -18,8 +19,7 @@ export function NouvellePartieButton() {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleClick = () => {
-    const abandonInProgress = partieStatus === "playing" && history.length > 0;
-    if (abandonInProgress) {
+    if (shouldConfirmAbandon({ partieStatus, history })) {
       setConfirmOpen(true);
       return;
     }

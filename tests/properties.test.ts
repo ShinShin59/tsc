@@ -1,11 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { getElement } from "@/data/elements";
-import { LEGENDE_ITEMS } from "@/data/legend-items";
-import { compareElements, countMatchingProperties, getDiscoveredPropertyIds, propertiesMatch } from "@/lib/properties-match";
+import {
+  compareElements,
+  countMatchingProperties,
+  getDiscoveredPropertyIds,
+  LEGEND_ITEMS,
+  propertiesMatch,
+} from "@/data/properties";
 
 describe("propertiesMatch", () => {
   it("matches scalar properties for identical elements", () => {
-    for (const { id } of LEGENDE_ITEMS) {
+    for (const { id } of LEGEND_ITEMS) {
       expect(propertiesMatch(26, 26, id)).toBe(true);
     }
   });
@@ -59,17 +64,17 @@ describe("getDiscoveredPropertyIds", () => {
     expect(getDiscoveredPropertyIds([], 61)).toEqual(new Set());
   });
 
-  it("discovers matching properties from wrong coups", () => {
+  it("discovers matching properties from wrong guesses", () => {
     const discovered = getDiscoveredPropertyIds([26], 11);
     expect(discovered.has("family")).toBe(false);
     expect(discovered.size).toBeGreaterThan(0);
-    expect(discovered.size).toBeLessThan(LEGENDE_ITEMS.length);
+    expect(discovered.size).toBeLessThan(LEGEND_ITEMS.length);
   });
 
   it("discovers all legend properties when mystery is in history", () => {
     const discovered = getDiscoveredPropertyIds([26, 28], 28);
-    expect(discovered.size).toBe(LEGENDE_ITEMS.length);
-    for (const { id } of LEGENDE_ITEMS) {
+    expect(discovered.size).toBe(LEGEND_ITEMS.length);
+    for (const { id } of LEGEND_ITEMS) {
       expect(discovered.has(id)).toBe(true);
     }
   });

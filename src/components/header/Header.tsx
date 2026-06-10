@@ -6,15 +6,15 @@ import { InfoButton } from "@/components/header/InfoButton";
 import { SettingsButton } from "@/components/header/SettingsButton";
 import { StatsButton } from "@/components/header/StatsButton";
 import type { OverlayId } from "@/components/header/shared";
-import { resolveHeaderSubtitle } from "@/lib/header-subtitle";
+import { resolveHeaderSubtitle } from "@/lib/rules";
 import { useGameStore } from "@/store/game";
 
 export function Header() {
   const [activeOverlay, setActiveOverlay] = useState<OverlayId | null>(null);
-  const partieStatus = useGameStore((state) => state.partieStatus);
+  const roundStatus = useGameStore((state) => state.roundStatus);
   const history = useGameStore((state) => state.history);
   const mysteryNumber = useGameStore((state) => state.mysteryNumber);
-  const subtitle = resolveHeaderSubtitle(partieStatus, history.length, mysteryNumber);
+  const subtitle = resolveHeaderSubtitle(roundStatus, history.length, mysteryNumber);
 
   const openOverlay = (overlay: OverlayId) => {
     setActiveOverlay(overlay);

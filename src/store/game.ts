@@ -3,7 +3,7 @@ import { getElement, MAX_ATOMIC_NUMBER } from "@/data/elements";
 import { getDailySeed, mysteryIndexFromSeed } from "@/lib/daily-mystery";
 
 export type GameMode = "daily" | "training";
-export type PartieStatus = "playing" | "won" | "lost";
+export type RoundStatus = "playing" | "won" | "lost";
 
 function clampMaxTries(value: number): number {
   return Math.min(MAX_ATOMIC_NUMBER, Math.max(1, Math.trunc(value)));
@@ -15,7 +15,7 @@ function logMysteryElement(gameMode: GameMode, seed: string, mysteryNumber: numb
   console.info(`[osc] élément mystère [${gameMode}] seed=${seed} → ${label}`);
 }
 
-function createInitialPartieState() {
+function createInitialRoundState() {
   const seed = getDailySeed();
   const maxTries = MAX_ATOMIC_NUMBER;
   const mysteryNumber = mysteryIndexFromSeed(seed);
@@ -26,24 +26,24 @@ function createInitialPartieState() {
     gameMode: "daily" as GameMode,
     seed,
     mysteryNumber,
-    partieStatus: "playing" as PartieStatus,
+    roundStatus: "playing" as RoundStatus,
     maxTries,
-    partieMaxTries: maxTries,
+    roundMaxTries: maxTries,
     hoveredNumber: null as number | null,
     committedNumber: null as number | null,
     history: [] as number[],
   };
 }
 
-type GameState = ReturnType<typeof createInitialPartieState> & {
+type GameState = ReturnType<typeof createInitialRoundState> & {
   setHoveredNumber: (elementNumber: number | null) => void;
   setMaxTries: (maxTries: number) => void;
   commitSelection: (elementNumber: number) => void;
-  startTrainingPartie: () => void;
+  startTrainingRound: () => void;
 };
 
 export const useGameStore = create<GameState>((set) => ({
-  ...createInitialPartieState(),
+  ...createInitialRoundState(),
 
   setHoveredNumber: (elementNumber) => set({ hoveredNumber: elementNumber }),
 
@@ -51,7 +51,7 @@ export const useGameStore = create<GameState>((set) => ({
 
   commitSelection: (elementNumber) =>
     set((state) => {
-      if (state.partieStatus !== "playing") {
+      if (state.roundStatus !== "playing") {
         return state;
       }
 
@@ -59,27 +59,27 @@ export const useGameStore = create<GameState>((set) => ({
         return state;
       }
 
-      if (state.history.length >= state.partieMaxTries) {
+      if (state.history.length >= state.roundMaxTries) {
         return state;
       }
 
       const history = [...state.history, elementNumber];
-      let partieStatus: PartieStatus = state.partieStatus;
+      let roundStatus: RoundStatus = state.roundStatus;
 
       if (elementNumber === state.mysteryNumber) {
-        partieStatus = "won";
-      } else if (history.length >= state.partieMaxTries) {
-        partieStatus = "lost";
+        roundStatus = "won";
+      } else if (history.length >= state.roundMaxTries) {
+        roundStatus = "lost";
       }
 
       return {
         committedNumber: elementNumber,
         history,
-        partieStatus,
+        roundStatus,
       };
     }),
 
-  startTrainingPartie: () =>
+  startTrainingRound: () =>
     set((state) => {
       const seed = crypto.randomUUID();
       const mysteryNumber = mysteryIndexFromSeed(seed);
@@ -90,11 +90,11 @@ export const useGameStore = create<GameState>((set) => ({
         gameMode: "training",
         seed,
         mysteryNumber,
-        partieStatus: "playing",
+        roundStatus: "playing",
         hoveredNumber: null,
         committedNumber: null,
         history: [],
-        partieMaxTries: state.maxTries,
+        roundMaxTries: state.maxTries,
       };
     }),
 }));

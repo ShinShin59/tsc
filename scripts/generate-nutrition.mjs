@@ -24,7 +24,7 @@ const TABLE_JSON = join(ROOT, "src/data/PeriodicTableJSON.json");
 const WIKIPEDIA_TEMPLATE = "Template:Periodic_table_(for_higher_organisms)";
 const CHNOPS_SYMBOLS = new Set(["H", "C", "N", "O", "P", "S"]);
 
-/** @type {Record<string, import("../src/data/nutrition-types.ts").NutritionCategory>} */
+/** @type {Record<string, import("../src/data/enriched/types.ts").NutritionCategory>} */
 const MANUAL_OVERRIDES = {};
 
 /** @typedef {"wiki-basic" | "macro" | "micro" | "uncertain" | "non-human"} WikiNutritionClass */
@@ -125,7 +125,7 @@ async function main() {
   }
 
   const tableJson = JSON.parse(readFileSync(TABLE_JSON, "utf8"));
-  /** @type {Record<string, import("../src/data/nutrition-types.ts").NutritionCategory>} */
+  /** @type {Record<string, import("../src/data/enriched/types.ts").NutritionCategory>} */
   const byNumber = {};
 
   for (const element of tableJson.elements) {

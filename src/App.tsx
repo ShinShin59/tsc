@@ -1,5 +1,5 @@
 import { Game } from "@/components/game/Game";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header/Header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 function App() {

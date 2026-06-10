@@ -23,7 +23,7 @@ const ROOT = join(__dirname, "..");
 const OUT_PATH = join(ROOT, "src/data/enriched/name-origin.json");
 const TABLE_JSON = join(ROOT, "src/data/PeriodicTableJSON.json");
 
-/** @type {Record<string, import("../src/data/name-origin-types.ts").NameOriginCategory[]>} */
+/** @type {Record<string, import("../src/data/enriched/types.ts").NameOriginCategory[]>} */
 const MANUAL_OVERRIDES = {
   // Wikipedia has no "organization" bucket; add entries here when needed.
 };
@@ -61,7 +61,7 @@ function classifyWikipediaOrigin(origin) {
     categories.add("other");
   }
 
-  return /** @type {import("../src/data/name-origin-types.ts").NameOriginCategory[]} */ ([
+  return /** @type {import("../src/data/enriched/types.ts").NameOriginCategory[]} */ ([
     ...categories,
   ]);
 }
@@ -117,7 +117,7 @@ function main() {
         throw new Error(`Expected 118 rows, got ${rows.length}`);
       }
 
-      /** @type {Record<string, import("../src/data/name-origin-types.ts").NameOriginCategory[]>} */
+      /** @type {Record<string, import("../src/data/enriched/types.ts").NameOriginCategory[]>} */
       const byNumber = {};
 
       for (const row of rows) {

@@ -8,23 +8,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { shouldConfirmAbandon } from "@/lib/partie";
+import { shouldConfirmAbandon } from "@/lib/rules";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 
-export function NouvellePartieButton() {
+export function NewGameButton() {
   const history = useGameStore((state) => state.history);
-  const partieStatus = useGameStore((state) => state.partieStatus);
-  const startTrainingPartie = useGameStore((state) => state.startTrainingPartie);
+  const roundStatus = useGameStore((state) => state.roundStatus);
+  const startTrainingRound = useGameStore((state) => state.startTrainingRound);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleClick = () => {
-    if (shouldConfirmAbandon({ partieStatus, history })) {
+    if (shouldConfirmAbandon({ roundStatus, history })) {
       setConfirmOpen(true);
       return;
     }
 
-    startTrainingPartie();
+    startTrainingRound();
   };
 
   return (
@@ -61,7 +61,7 @@ export function NouvellePartieButton() {
             <Button
               type="button"
               onClick={() => {
-                startTrainingPartie();
+                startTrainingRound();
                 setConfirmOpen(false);
               }}
             >

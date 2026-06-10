@@ -23,7 +23,7 @@ const TABLE_JSON = join(ROOT, "src/data/PeriodicTableJSON.json");
 
 const WIKIPEDIA_PAGE = "Timeline_of_chemical_element_discoveries";
 
-/** @type {Record<string, { period: import("../src/data/discovery-types.ts").DiscoveryPeriod; year: number | null }>} */
+/** @type {Record<string, { period: import("../src/data/enriched/types.ts").DiscoveryPeriod; year: number | null }>} */
 const MANUAL_OVERRIDES = {};
 
 /** @param {number} year */
@@ -157,7 +157,7 @@ async function main() {
   const yearsByNumber = mergeDiscoveryYears(preModern, modern);
 
   const tableJson = JSON.parse(readFileSync(TABLE_JSON, "utf8"));
-  /** @type {Record<string, { period: import("../src/data/discovery-types.ts").DiscoveryPeriod; year: number | null }>} */
+  /** @type {Record<string, { period: import("../src/data/enriched/types.ts").DiscoveryPeriod; year: number | null }>} */
   const byNumber = {};
 
   for (const element of tableJson.elements) {

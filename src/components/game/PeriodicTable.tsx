@@ -1,10 +1,9 @@
 import type { CSSProperties } from "react";
 import { elements } from "@/data/elements";
-import { resolveDisplayNumber } from "@/lib/triangulation-view";
-import { canCommitCoup } from "@/lib/partie";
+import { canCommit, resolveDisplayNumber } from "@/lib/rules";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
-import { TABLE_CELL_SIZE } from "./constants";
+import { TABLE_CELL_SIZE } from "./const";
 import { ElementCell } from "./ElementCell";
 
 type PeriodicTableProps = {
@@ -14,7 +13,7 @@ type PeriodicTableProps = {
 export function PeriodicTable({ className }: PeriodicTableProps) {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
   const committedNumber = useGameStore((state) => state.committedNumber);
-  const partieStatus = useGameStore((state) => state.partieStatus);
+  const roundStatus = useGameStore((state) => state.roundStatus);
   const setHoveredNumber = useGameStore((state) => state.setHoveredNumber);
   const commitSelection = useGameStore((state) => state.commitSelection);
   const spacer = Math.round(TABLE_CELL_SIZE * 0.06);
@@ -41,7 +40,7 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
               selected={el.number === highlightedNumber}
               onMouseEnter={() => setHoveredNumber(el.number)}
               onClick={() => {
-                if (canCommitCoup(partieStatus)) {
+                if (canCommit(roundStatus)) {
                   commitSelection(el.number);
                 }
               }}

@@ -1,10 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { getElement } from "@/data/elements";
-import { cellAppearance } from "@/palette/famille";
-import { DEFAULT_PALETTE_MODE, resolvePaletteAppearance } from "@/palette/index";
+import { cellAppearance, DEFAULT_PALETTE_MODE, resolvePaletteAppearance } from "@/palette/index";
 
 describe("resolvePaletteAppearance", () => {
-  it("matches famille palette for the default mode", () => {
+  it("matches family palette for the default mode", () => {
     const element = getElement(26);
     expect(element).toBeDefined();
     if (!element) {

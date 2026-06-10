@@ -5,29 +5,21 @@ import stabilityJson from "@/data/enriched/stability.json";
 import synthesisJson from "@/data/enriched/synthesis.json";
 import {
   DISCOVERY_LABELS,
+  NAME_ORIGIN_LABELS,
+  NUTRITION_LABELS,
+  STABILITY_LABELS,
+  SYNTHESIS_LABELS,
   type DiscoveryDataset,
   type DiscoveryPeriod,
-} from "@/data/discovery-types";
-import {
-  NAME_ORIGIN_LABELS,
   type NameOriginCategory,
   type NameOriginDataset,
-} from "@/data/name-origin-types";
-import {
-  NUTRITION_LABELS,
   type NutritionCategory,
   type NutritionDataset,
-} from "@/data/nutrition-types";
-import {
-  STABILITY_LABELS,
   type StabilityDataset,
   type StabilityTier,
-} from "@/data/stability-types";
-import {
-  SYNTHESIS_LABELS,
   type SynthesisDataset,
   type SynthesisOrigin,
-} from "@/data/synthesis-types";
+} from "@/data/enriched/types";
 
 const synthesisDataset = synthesisJson as SynthesisDataset;
 const nutritionDataset = nutritionJson as NutritionDataset;

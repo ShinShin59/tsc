@@ -7,8 +7,8 @@ import { useGameStore } from "@/store/game";
 
 export function SettingsButton({ open, onOpenChange, onOpen }: OverlayControlProps) {
   const maxTries = useGameStore((state) => state.maxTries);
-  const partieMaxTries = useGameStore((state) => state.partieMaxTries);
-  const partieStatus = useGameStore((state) => state.partieStatus);
+  const roundMaxTries = useGameStore((state) => state.roundMaxTries);
+  const roundStatus = useGameStore((state) => state.roundStatus);
   const setMaxTries = useGameStore((state) => state.setMaxTries);
   const [language, setLanguage] = useState<"fr" | "en">("fr");
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -43,9 +43,9 @@ export function SettingsButton({ open, onOpenChange, onOpen }: OverlayControlPro
             onChange={(event) => setMaxTries(Number(event.target.value))}
             className="w-full accent-accent"
           />
-          {partieStatus === "playing" && (
+          {roundStatus === "playing" && (
             <p className="text-xs text-white/70">
-              Partie en cours : {partieMaxTries} coups. Prochaine partie : {maxTries} coups.
+              Partie en cours : {roundMaxTries} coups. Prochaine partie : {maxTries} coups.
             </p>
           )}
         </div>

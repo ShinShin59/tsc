@@ -7,9 +7,9 @@ function resetStore(overrides: Partial<ReturnType<typeof useGameStore.getState>>
     gameMode: "daily",
     seed: "2026-06-09",
     mysteryNumber: 61,
-    partieStatus: "playing",
+    roundStatus: "playing",
     maxTries: MAX_ATOMIC_NUMBER,
-    partieMaxTries: MAX_ATOMIC_NUMBER,
+    roundMaxTries: MAX_ATOMIC_NUMBER,
     hoveredNumber: null,
     committedNumber: null,
     history: [],
@@ -41,8 +41,8 @@ describe("useGameStore commitSelection", () => {
     expect(useGameStore.getState().history).toEqual([26, 11, 1]);
   });
 
-  it("blocks commits once partieMaxTries is reached", () => {
-    resetStore({ partieMaxTries: 2, maxTries: 2 });
+  it("blocks commits once roundMaxTries is reached", () => {
+    resetStore({ roundMaxTries: 2, maxTries: 2 });
     useGameStore.getState().commitSelection(26);
     useGameStore.getState().commitSelection(11);
     useGameStore.getState().commitSelection(1);
@@ -51,37 +51,37 @@ describe("useGameStore commitSelection", () => {
     expect(useGameStore.getState().committedNumber).toBe(11);
   });
 
-  it("sets partieStatus to won when mystery element is committed", () => {
+  it("sets roundStatus to won when mystery element is committed", () => {
     resetStore({ mysteryNumber: 26 });
     useGameStore.getState().commitSelection(11);
     useGameStore.getState().commitSelection(26);
 
-    expect(useGameStore.getState().partieStatus).toBe("won");
+    expect(useGameStore.getState().roundStatus).toBe("won");
     expect(useGameStore.getState().history).toEqual([11, 26]);
   });
 
-  it("sets partieStatus to lost when cap is reached without a win", () => {
-    resetStore({ mysteryNumber: 1, partieMaxTries: 2, maxTries: 2 });
+  it("sets roundStatus to lost when cap is reached without a win", () => {
+    resetStore({ mysteryNumber: 1, roundMaxTries: 2, maxTries: 2 });
     useGameStore.getState().commitSelection(26);
     useGameStore.getState().commitSelection(11);
 
-    expect(useGameStore.getState().partieStatus).toBe("lost");
+    expect(useGameStore.getState().roundStatus).toBe("lost");
     expect(useGameStore.getState().history).toEqual([26, 11]);
   });
 
-  it("blocks commits after the partie ends", () => {
+  it("blocks commits after the round ends", () => {
     resetStore({ mysteryNumber: 26 });
     useGameStore.getState().commitSelection(26);
 
     useGameStore.getState().commitSelection(11);
     expect(useGameStore.getState().history).toEqual([26]);
-    expect(useGameStore.getState().partieStatus).toBe("won");
+    expect(useGameStore.getState().roundStatus).toBe("won");
   });
 });
 
 describe("useGameStore setMaxTries", () => {
   beforeEach(() => {
-    resetStore({ partieMaxTries: 10 });
+    resetStore({ roundMaxTries: 10 });
   });
 
   it("clamps preference to 1..MAX_ATOMIC_NUMBER", () => {
@@ -92,27 +92,27 @@ describe("useGameStore setMaxTries", () => {
     expect(useGameStore.getState().maxTries).toBe(MAX_ATOMIC_NUMBER);
   });
 
-  it("does not change partieMaxTries mid-partie", () => {
+  it("does not change roundMaxTries mid-round", () => {
     useGameStore.getState().setMaxTries(5);
-    expect(useGameStore.getState().partieMaxTries).toBe(10);
+    expect(useGameStore.getState().roundMaxTries).toBe(10);
   });
 });
 
-describe("useGameStore startTrainingPartie", () => {
+describe("useGameStore startTrainingRound", () => {
   beforeEach(() => {
-    resetStore({ maxTries: 12, partieMaxTries: 10, history: [26], committedNumber: 26 });
+    resetStore({ maxTries: 12, roundMaxTries: 10, history: [26], committedNumber: 26 });
   });
 
   it("resets session state and switches to training", () => {
-    useGameStore.getState().startTrainingPartie();
+    useGameStore.getState().startTrainingRound();
     const state = useGameStore.getState();
 
     expect(state.gameMode).toBe("training");
-    expect(state.partieStatus).toBe("playing");
+    expect(state.roundStatus).toBe("playing");
     expect(state.history).toEqual([]);
     expect(state.committedNumber).toBeNull();
     expect(state.hoveredNumber).toBeNull();
-    expect(state.partieMaxTries).toBe(12);
+    expect(state.roundMaxTries).toBe(12);
     expect(state.seed).not.toBe("2026-06-09");
     expect(state.mysteryNumber).toBeGreaterThanOrEqual(1);
     expect(state.mysteryNumber).toBeLessThanOrEqual(MAX_ATOMIC_NUMBER);

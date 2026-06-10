@@ -26,7 +26,7 @@ const SVG_PAGE =
   "https://commons.wikimedia.org/wiki/File:Periodic_Table_Radioactivity.svg";
 const TEXT_LAYER_OFFSET = { x: 3.791, y: 0.5718 };
 
-/** @type {Record<string, import("../src/data/stability-types.ts").StabilityTier>} */
+/** @type {Record<string, import("../src/data/enriched/types.ts").StabilityTier>} */
 const COLOR_TO_TIER = {
   "#00ffff": "stable",
   "#00ff00": "moderate",
@@ -36,7 +36,7 @@ const COLOR_TO_TIER = {
   "#804080": "extreme",
 };
 
-/** @type {Record<string, import("../src/data/stability-types.ts").StabilityTier>} */
+/** @type {Record<string, import("../src/data/enriched/types.ts").StabilityTier>} */
 const MANUAL_OVERRIDES = {};
 
 async function fetchSvgUrl() {
@@ -142,7 +142,7 @@ async function main() {
     ]),
   );
 
-  /** @type {Record<string, import("../src/data/stability-types.ts").StabilityTier>} */
+  /** @type {Record<string, import("../src/data/enriched/types.ts").StabilityTier>} */
   const byNumber = {};
 
   for (const element of elements) {

@@ -32,7 +32,7 @@ const SVG_URL =
 const NASA_SVS_URL = "https://svs.gsfc.nasa.gov/13873/";
 const THRESHOLD_PERCENT = 5;
 
-/** @type {Record<string, import("../src/data/synthesis-types.ts").SynthesisOrigin[]>} */
+/** @type {Record<string, import("../src/data/enriched/types.ts").SynthesisOrigin[]>} */
 const MANUAL_OVERRIDES = {};
 
 /** @type {Set<number>} */
@@ -64,7 +64,7 @@ function mapJohnsonSource(source) {
 
 /** @param {string} title @param {number} atomicNumber */
 function parseTitleOrigins(title, atomicNumber) {
-  /** @type {{ origin: import("../src/data/synthesis-types.ts").SynthesisOrigin; percent: number }[]} */
+  /** @type {{ origin: import("../src/data/enriched/types.ts").SynthesisOrigin; percent: number }[]} */
   const weighted = [];
 
   for (const segment of title.split(",")) {
@@ -94,7 +94,7 @@ function parseTitleOrigins(title, atomicNumber) {
     .filter((entry) => entry.percent >= THRESHOLD_PERCENT)
     .sort((a, b) => b.percent - a.percent);
 
-  /** @type {import("../src/data/synthesis-types.ts").SynthesisOrigin[]} */
+  /** @type {import("../src/data/enriched/types.ts").SynthesisOrigin[]} */
   const origins = [];
   for (const entry of selected) {
     if (!origins.includes(entry.origin)) {
@@ -141,7 +141,7 @@ async function main() {
   }
 
   const tableJson = JSON.parse(readFileSync(TABLE_JSON, "utf8"));
-  /** @type {Record<string, import("../src/data/synthesis-types.ts").SynthesisOrigin[]>} */
+  /** @type {Record<string, import("../src/data/enriched/types.ts").SynthesisOrigin[]>} */
   const byNumber = {};
 
   for (const element of tableJson.elements) {

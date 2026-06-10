@@ -9,6 +9,9 @@ export default defineConfig({
   resolve: {
     alias: { '@': path.resolve(__dirname, 'src') },
   },
+  test: {
+    include: ['tests/**/*.test.ts'],
+  },
   lint: {
     plugins: ['react', 'typescript'],
     ignorePatterns: ['dist/**'],

@@ -7,6 +7,12 @@ import {
 } from "@/data/properties";
 import type { PropertyCardRow, PropertyRowState } from "@/components/game/property-card/types";
 
+const EMPTY_DISCOVERED: ReadonlySet<LegendPropertyId> = new Set();
+
+export function buildUndiscoveredPropertyRows(element?: Element): PropertyCardRow[] {
+  return buildPropertyRows(element, { mode: "mystery", discovered: EMPTY_DISCOVERED });
+}
+
 export function buildPropertyRows(
   element: Element | undefined,
   options:

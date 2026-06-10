@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { buildPropertyRows } from "@/components/game/property-card/buildPropertyRows";
+import {
+  buildPropertyRows,
+  buildUndiscoveredPropertyRows,
+} from "@/components/game/property-card/buildPropertyRows";
 import { getElement } from "@/data/elements";
 import { getDiscoveredPropertyIds } from "@/data/properties";
 import {
@@ -112,5 +115,11 @@ describe("buildPropertyRows", () => {
     const rows = buildPropertyRows(element, { mode: "mystery", discovered });
     expect(rows.some((row) => row.state === "discovered")).toBe(true);
     expect(rows.some((row) => row.state === "undiscovered")).toBe(true);
+  });
+
+  it("shows all undiscovered rows for the empty player card", () => {
+    const rows = buildUndiscoveredPropertyRows();
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows.every((row) => row.state === "undiscovered")).toBe(true);
   });
 });

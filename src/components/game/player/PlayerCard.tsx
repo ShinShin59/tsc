@@ -1,5 +1,8 @@
 import { getElement } from "@/data/elements";
-import { buildPropertyRows } from "@/components/game/property-card/buildPropertyRows";
+import {
+  buildPropertyRows,
+  buildUndiscoveredPropertyRows,
+} from "@/components/game/property-card/buildPropertyRows";
 import { PropertyCardList } from "@/components/game/property-card/PropertyCardList";
 import { resolveDisplayNumber, shouldShowComparison } from "@/lib/rules";
 import { useGameStore } from "@/store/game";
@@ -21,11 +24,9 @@ export function PlayerCard() {
     history,
   });
 
-  if (!element) {
-    return null;
-  }
-
-  const rows = buildPropertyRows(element, { mode: "identity", mysteryNumber, showComparison });
+  const rows = element
+    ? buildPropertyRows(element, { mode: "identity", mysteryNumber, showComparison })
+    : buildUndiscoveredPropertyRows();
 
   return (
     <aside aria-label="Carte d'identité" className={cardClassName}>

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { elements } from "@/data/elements";
+import { resolveDisplayNumber } from "@/lib/triangulation-view";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 import { TABLE_CELL_SIZE } from "./constants";
@@ -17,7 +18,7 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
   const commitSelection = useGameStore((state) => state.commitSelection);
   const spacer = Math.round(TABLE_CELL_SIZE * 0.06);
 
-  const highlightedNumber = hoveredNumber ?? committedNumber;
+  const highlightedNumber = resolveDisplayNumber({ hoveredNumber, committedNumber });
 
   return (
     <div className={cn("overflow-x-auto p-4", className)}>

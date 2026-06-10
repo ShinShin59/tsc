@@ -3,6 +3,7 @@ import { getElement } from "@/data/elements";
 import { resolveIdentityPropertyValue } from "@/data/identity-property-values";
 import { LEGENDE_ITEMS } from "@/data/legend-items";
 import { propertiesMatch } from "@/lib/properties-match";
+import { resolveDisplayNumber, shouldShowTriangulation } from "@/lib/triangulation-view";
 import { useGameStore } from "@/store/game";
 
 export function CarteIdentite() {
@@ -11,12 +12,14 @@ export function CarteIdentite() {
   const history = useGameStore((state) => state.history);
   const mysteryNumber = useGameStore((state) => state.mysteryNumber);
 
-  const displayNumber = hoveredNumber ?? committedNumber;
+  const displayNumber = resolveDisplayNumber({ hoveredNumber, committedNumber });
   const element = displayNumber ? getElement(displayNumber) : undefined;
-  const showComparison =
-    displayNumber !== null &&
-    (history.includes(displayNumber) ||
-      (hoveredNumber === null && displayNumber === committedNumber));
+  const showComparison = shouldShowTriangulation({
+    displayNumber,
+    hoveredNumber,
+    committedNumber,
+    history,
+  });
 
   return (
     <aside

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getElement } from "@/data/elements";
+import { resolveDisplayNumber } from "@/lib/triangulation-view";
 import { useGameStore } from "@/store/game";
 import { SELECTED_CELL_SCALE, SELECTED_CELL_SIZE, TABLE_CELL_SIZE } from "./constants";
 import { ElementCell } from "./ElementCell";
@@ -8,7 +9,7 @@ export function CaseSelectionnee() {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
   const committedNumber = useGameStore((state) => state.committedNumber);
 
-  const displayNumber = hoveredNumber ?? committedNumber;
+  const displayNumber = resolveDisplayNumber({ hoveredNumber, committedNumber });
   const element = displayNumber ? getElement(displayNumber) : undefined;
 
   return (

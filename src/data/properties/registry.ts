@@ -1,10 +1,17 @@
 import type { Element } from "@/data/elements";
-import { getDiscoveryPeriod, formatDiscovery } from "@/data/discovery";
+import {
+  formatDiscovery,
+  formatNameOrigin,
+  formatNutrition,
+  formatStability,
+  formatSynthesis,
+  getDiscoveryPeriod,
+  getNameOriginCategories,
+  getNutritionCategory,
+  getStabilityTier,
+  getSynthesisOrigins,
+} from "@/data/enriched";
 import type { LegendePropertyId } from "@/data/legend-items";
-import { getNameOriginCategories, formatNameOrigin } from "@/data/name-origin";
-import { getNutritionCategory, formatNutrition } from "@/data/nutrition";
-import { getStabilityTier, formatStability } from "@/data/stability";
-import { getSynthesisOrigins, formatSynthesis } from "@/data/synthesis";
 
 function setsOverlap<T>(left: readonly T[], right: readonly T[]): boolean {
   const rightSet = new Set(right);

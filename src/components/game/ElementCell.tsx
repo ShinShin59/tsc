@@ -1,5 +1,5 @@
 import type { Element } from "@/data/elements";
-import { cellAppearance } from "@/palette/famille";
+import { resolvePaletteAppearance } from "@/palette/index";
 import { cn } from "@/lib/utils";
 
 type ElementCellProps = {
@@ -17,7 +17,7 @@ export function ElementCell({
   onClick,
   onMouseEnter,
 }: ElementCellProps) {
-  const { backgroundColor, textClass } = cellAppearance(element.category);
+  const { backgroundColor, textClass } = resolvePaletteAppearance(element);
 
   return (
     <button

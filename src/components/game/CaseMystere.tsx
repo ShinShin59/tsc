@@ -1,6 +1,6 @@
 import { getElement } from "@/data/elements";
 import { isCaseMystereRevealed } from "@/lib/partie";
-import { cellAppearance } from "@/palette/famille";
+import { resolvePaletteAppearance } from "@/palette/index";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 import { SELECTED_CELL_SIZE } from "./constants";
@@ -23,7 +23,7 @@ export function CaseMystere() {
     );
   }
 
-  const { backgroundColor, textClass } = cellAppearance(element.category);
+  const { backgroundColor, textClass } = resolvePaletteAppearance(element);
 
   return (
     <div

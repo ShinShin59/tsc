@@ -1,6 +1,6 @@
 import { getElement } from "@/data/elements";
 import { countMatchingProperties } from "@/lib/properties-match";
-import { cellAppearance } from "@/palette/famille";
+import { resolvePaletteAppearance } from "@/palette/index";
 import { cn } from "@/lib/utils";
 import {
   HISTORY_CELL_SIZE,
@@ -20,7 +20,7 @@ export function HistoryCase({ elementNumber, mysteryNumber, onMouseEnter }: Hist
     return null;
   }
 
-  const { backgroundColor, textClass } = cellAppearance(element.category);
+  const { backgroundColor, textClass } = resolvePaletteAppearance(element);
   const { matched, total } = countMatchingProperties(elementNumber, mysteryNumber);
   const fillRatio = matched / total;
 

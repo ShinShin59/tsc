@@ -16,7 +16,7 @@ export function shouldConfirmAbandon({ roundStatus, history }: RoundSnapshot): b
   return roundStatus === "playing" && history.length > 0;
 }
 
-export function isMysterySlotRevealed(roundStatus: RoundStatus): boolean {
+export function isMysteryCellRevealed(roundStatus: RoundStatus): boolean {
   return roundStatus !== "playing";
 }
 

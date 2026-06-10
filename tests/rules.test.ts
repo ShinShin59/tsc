@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { buildPropertyRows } from "@/components/game/PropertyCards";
+import { buildPropertyRows } from "@/components/game/property-card/buildPropertyRows";
 import { getElement } from "@/data/elements";
 import { getDiscoveredPropertyIds } from "@/data/properties";
 import {
   canCommit,
-  isMysterySlotRevealed,
+  isMysteryCellRevealed,
   resolveDisplayNumber,
   resolveHeaderSubtitle,
   shouldConfirmAbandon,
@@ -78,14 +78,14 @@ describe("shouldConfirmAbandon", () => {
   });
 });
 
-describe("isMysterySlotRevealed", () => {
+describe("isMysteryCellRevealed", () => {
   it("hides the mystery symbol while playing", () => {
-    expect(isMysterySlotRevealed("playing")).toBe(false);
+    expect(isMysteryCellRevealed("playing")).toBe(false);
   });
 
   it("reveals the mystery symbol after win or loss", () => {
-    expect(isMysterySlotRevealed("won")).toBe(true);
-    expect(isMysterySlotRevealed("lost")).toBe(true);
+    expect(isMysteryCellRevealed("won")).toBe(true);
+    expect(isMysteryCellRevealed("lost")).toBe(true);
   });
 });
 

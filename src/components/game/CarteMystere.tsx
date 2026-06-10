@@ -1,7 +1,6 @@
-import { CarteIdentiteRow, type MysteryPropertyState } from "@/components/game/CarteIdentiteRow";
+import { PropertyCardList } from "@/components/game/PropertyCardList";
+import { buildMysterePropertyRows } from "@/components/game/property-card-rows";
 import { getElement } from "@/data/elements";
-import { resolveIdentityPropertyValue } from "@/data/identity-property-values";
-import { LEGENDE_ITEMS } from "@/data/legend-items";
 import { getDiscoveredPropertyIds } from "@/lib/properties-match";
 import { useGameStore } from "@/store/game";
 
@@ -10,23 +9,11 @@ export function CarteMystere() {
   const history = useGameStore((state) => state.history);
   const element = getElement(mysteryNumber);
   const discovered = getDiscoveredPropertyIds(history, mysteryNumber);
+  const rows = buildMysterePropertyRows(element, discovered);
 
   return (
     <aside aria-label="Carte mystère" className="flex w-[175px] flex-col">
-      <ul className="flex flex-col gap-y-0.5">
-        {LEGENDE_ITEMS.map(({ id, icon }) => {
-          const state: MysteryPropertyState = discovered.has(id) ? "discovered" : "undiscovered";
-
-          return (
-            <CarteIdentiteRow
-              key={id}
-              icon={icon}
-              value={resolveIdentityPropertyValue(element, id)}
-              state={state}
-            />
-          );
-        })}
-      </ul>
+      <PropertyCardList rows={rows} />
     </aside>
   );
 }

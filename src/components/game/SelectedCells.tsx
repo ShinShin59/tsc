@@ -5,11 +5,8 @@ import { resolvePaletteAppearance } from "@/palette/index";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 import { ElementCell } from "./ElementCell";
-import {
-  SELECTED_CELL_SCALE,
-  SELECTED_CELL_SIZE,
-  TABLE_CELL_SIZE,
-} from "./const";
+
+const slotClassName = "size-20 shrink-0 sm:size-28 md:size-36";
 
 export function SelectedCell() {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
@@ -20,31 +17,18 @@ export function SelectedCell() {
 
   return (
     <div
-      style={{ width: SELECTED_CELL_SIZE, height: SELECTED_CELL_SIZE }}
+      className={slotClassName}
       aria-label={element ? `Élément sélectionné : ${element.name}` : "Aucun élément sélectionné"}
     >
       {element ? (
-        <div className="size-full">
-          <div
-            className="origin-top-left"
-            style={
-              {
-                width: TABLE_CELL_SIZE,
-                height: TABLE_CELL_SIZE,
-                transform: `scale(${SELECTED_CELL_SCALE})`,
-                "--cell-size": `${TABLE_CELL_SIZE}px`,
-              } as CSSProperties
-            }
-          >
-            <ElementCell
-              element={element}
-              selected
-              className="cursor-default hover:brightness-100"
-            />
-          </div>
-        </div>
+        <ElementCell
+          element={element}
+          selected
+          className="size-full cursor-default hover:brightness-100"
+          style={{ "--cell-size": "100%" } as CSSProperties}
+        />
       ) : (
-        <div className="flex size-full items-center justify-center rounded-sm border-white/40 text-2xl font-bold text-white/50" />
+        <div className="flex size-full items-center justify-center rounded-sm border border-white/40 text-xl font-bold text-white/50 sm:text-2xl" />
       )}
     </div>
   );
@@ -59,11 +43,13 @@ export function MysterySlot() {
   if (!revealed) {
     return (
       <div
-        className="flex items-center justify-center rounded-sm border-2 border-accent bg-transparent"
-        style={{ width: SELECTED_CELL_SIZE, height: SELECTED_CELL_SIZE }}
+        className={cn(
+          slotClassName,
+          "flex items-center justify-center rounded-sm border-2 border-accent bg-transparent",
+        )}
         aria-label="Élément mystère"
       >
-        <span className="text-7xl font-bold leading-none text-accent">?</span>
+        <span className="text-4xl font-bold leading-none text-accent sm:text-5xl md:text-7xl">?</span>
       </div>
     );
   }
@@ -73,17 +59,14 @@ export function MysterySlot() {
   return (
     <div
       className={cn(
+        slotClassName,
         "flex items-center justify-center rounded-sm border-2 border-black/20",
         textClass,
       )}
-      style={{
-        width: SELECTED_CELL_SIZE,
-        height: SELECTED_CELL_SIZE,
-        backgroundColor,
-      }}
+      style={{ backgroundColor }}
       aria-label={`Élément mystère : ${element.name} (${element.symbol})`}
     >
-      <span className="text-7xl font-bold leading-none">{element.symbol}</span>
+      <span className="text-4xl font-bold leading-none sm:text-5xl md:text-7xl">{element.symbol}</span>
     </div>
   );
 }

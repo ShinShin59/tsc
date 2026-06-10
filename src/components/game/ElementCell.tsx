@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { Element } from "@/data/elements";
 import { resolvePaletteAppearance } from "@/palette/index";
 import { cn } from "@/lib/utils";
@@ -6,6 +7,7 @@ type ElementCellProps = {
   element: Element;
   selected?: boolean;
   className?: string;
+  style?: CSSProperties;
   onClick?: () => void;
   onMouseEnter?: () => void;
 };
@@ -14,6 +16,7 @@ export function ElementCell({
   element,
   selected = false,
   className,
+  style,
   onClick,
   onMouseEnter,
 }: ElementCellProps) {
@@ -31,7 +34,7 @@ export function ElementCell({
         textClass,
         className,
       )}
-      style={{ backgroundColor }}
+      style={{ backgroundColor, ...style }}
     >
       <div className="text-[7px] leading-none">
         <span>{element.number}</span>

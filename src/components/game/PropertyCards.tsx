@@ -60,13 +60,13 @@ function PropertyCardRow({ icon, value, state = "mismatch" }: Omit<PropertyCardR
         alt=""
         aria-hidden
         className={cn(
-          "size-[19px] shrink-0 object-contain",
+          "size-4 shrink-0 object-contain sm:size-[19px]",
           (isDimmed || isUndiscovered) && "brightness-0 opacity-30",
         )}
       />
       <span
         className={cn(
-          "min-w-0 truncate text-[12px] font-bold leading-none",
+          "min-w-0 truncate text-[11px] font-bold leading-none sm:text-[12px]",
           state === "match" && "text-accent",
           isDimmed && "text-black/35",
           state === "discovered" && "text-accent",
@@ -90,6 +90,8 @@ function PropertyCardList({ rows }: { rows: PropertyCardRow[] }) {
   );
 }
 
+const cardClassName = "flex w-[120px] flex-col sm:w-[140px] md:w-[175px]";
+
 export function IdentityCard() {
   const hoveredNumber = useGameStore((state) => state.hoveredNumber);
   const committedNumber = useGameStore((state) => state.committedNumber);
@@ -106,11 +108,12 @@ export function IdentityCard() {
   });
   const rows = buildPropertyRows(element, { mode: "identity", mysteryNumber, showComparison });
 
+  if (!element) {
+    return <div aria-hidden className={cn(cardClassName, "invisible")} />;
+  }
+
   return (
-    <aside
-      aria-label="Carte d'identité"
-      className={`flex flex-col w-[175px]${element ? "" : " opacity-0"}`}
-    >
+    <aside aria-label="Carte d'identité" className={cardClassName}>
       <PropertyCardList rows={rows} />
     </aside>
   );
@@ -124,7 +127,7 @@ export function MysteryCard() {
   const rows = buildPropertyRows(element, { mode: "mystery", discovered });
 
   return (
-    <aside aria-label="Carte mystère" className="flex w-[175px] flex-col">
+    <aside aria-label="Carte mystère" className={cardClassName}>
       <PropertyCardList rows={rows} />
     </aside>
   );

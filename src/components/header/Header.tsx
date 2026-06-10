@@ -29,7 +29,7 @@ export function Header() {
   };
 
   return (
-    <header className="relative px-2 pb-10">
+    <header className="relative shrink-0 px-2 pb-2 md:pb-4">
       <nav className="flex items-center justify-end gap-1 py-1" aria-label="Actions">
         <StatsButton
           open={activeOverlay === "stats"}
@@ -53,14 +53,25 @@ export function Header() {
         />
       </nav>
 
-      <div className="relative flex items-center justify-center flex-wrap">
-        <img src={loupeSrc} alt="" aria-hidden className="h-50 w-50" />
+      <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-4">
+        <img
+          src={loupeSrc}
+          alt=""
+          aria-hidden
+          className="h-16 w-16 shrink-0 sm:h-20 sm:w-20 md:h-24 md:w-24"
+        />
         <div className="flex flex-col items-center text-center">
           <h1>
-            <img src={titreSrc} alt="Élémentaire" className="h-auto w-full max-w-4xl" />
+            <img
+              src={titreSrc}
+              alt="Élémentaire"
+              className="h-auto w-52 sm:w-64 md:w-80 lg:max-w-2xl"
+            />
           </h1>
+          <h2 className="max-w-full text-lg font-bold text-accent sm:text-xl md:text-2xl lg:text-4xl">
+            {subtitle}
+          </h2>
         </div>
-        <h2 className="text-4xl font-bold text-accent w-100%">{subtitle}</h2>
       </div>
     </header>
   );

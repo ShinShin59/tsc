@@ -1,17 +1,8 @@
 import type { Element } from "@/data/elements";
 import { getElement } from "@/data/elements";
-import { getDiscoveryPeriod } from "@/data/discovery";
-import { resolveElementBlock } from "@/data/identity-property-values";
-import { LEGENDE_ITEMS, type LegendePropertyId } from "@/data/legend-items";
-import { getNameOriginCategories } from "@/data/name-origin";
-import { getNutritionCategory } from "@/data/nutrition";
-import { getStabilityTier } from "@/data/stability";
-import { getSynthesisOrigins } from "@/data/synthesis";
-
-function setsOverlap<T>(left: readonly T[], right: readonly T[]): boolean {
-  const rightSet = new Set(right);
-  return left.some((item) => rightSet.has(item));
-}
+import { compareProperty } from "@/data/properties";
+import type { LegendePropertyId } from "@/data/legend-items";
+import { LEGENDE_ITEMS } from "@/data/legend-items";
 
 export function propertiesMatch(
   elementNumberA: number,
@@ -32,34 +23,7 @@ export function compareElements(
   elementB: Element,
   propertyId: LegendePropertyId,
 ): boolean {
-  switch (propertyId) {
-    case "period":
-      return elementA.period === elementB.period;
-    case "group":
-      return elementA.group === elementB.group;
-    case "block":
-      return resolveElementBlock(elementA) === resolveElementBlock(elementB);
-    case "family":
-      return elementA.category === elementB.category;
-    case "state":
-      return elementA.phase === elementB.phase;
-    case "synthesis":
-      return setsOverlap(
-        getSynthesisOrigins(elementA.number),
-        getSynthesisOrigins(elementB.number),
-      );
-    case "nutrition":
-      return getNutritionCategory(elementA.number) === getNutritionCategory(elementB.number);
-    case "discovery":
-      return getDiscoveryPeriod(elementA.number) === getDiscoveryPeriod(elementB.number);
-    case "stability":
-      return getStabilityTier(elementA.number) === getStabilityTier(elementB.number);
-    case "etymology":
-      return setsOverlap(
-        getNameOriginCategories(elementA.number),
-        getNameOriginCategories(elementB.number),
-      );
-  }
+  return compareProperty(elementA, elementB, propertyId);
 }
 
 export type PropertyMatchCount = {

@@ -21,7 +21,7 @@ export function PeriodicTable({ className }: PeriodicTableProps) {
   const highlightedNumber = resolveDisplayNumber({ hoveredNumber, committedNumber });
 
   return (
-    <div className={cn("overflow-x-auto p-4", className)}>
+    <div className={cn("overflow-auto px-2 py-2", className)}>
       <div
         className="mx-auto grid w-fit gap-px"
         onMouseLeave={() => setHoveredNumber(null)}

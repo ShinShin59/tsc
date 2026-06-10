@@ -33,7 +33,7 @@ export function NewGameButton() {
         type="button"
         variant="outline"
         className={cn(
-          "absolute bottom-3 left-[3%] z-10 border-white/50 bg-[#2d3e47]/90 text-white hover:bg-[#2d3e47] hover:text-white",
+          "shrink-0 border-white/50 bg-[#2d3e47]/90 text-white hover:bg-[#2d3e47] hover:text-white",
         )}
         onClick={handleClick}
       >

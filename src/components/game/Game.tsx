@@ -4,27 +4,33 @@ import { NewGameButton } from "@/components/game/NewGameButton";
 import { IdentityCard, MysteryCard } from "@/components/game/PropertyCards";
 import { MysterySlot, SelectedCell } from "@/components/game/SelectedCells";
 import { PeriodicTable } from "@/components/game/PeriodicTable";
-import { cn } from "@/lib/utils";
 
 export function Game() {
   return (
-    <div className="flex h-full flex-col">
-      <div className="relative min-h-0 flex-1">
-        <PeriodicTable className="absolute inset-0" />
-        <History />
-        <div className="absolute top-0 left-[15%] z-10 w-[600px] flex justify-between">
-          <div className={cn("flex items-center gap-x-2")}>
+    <main className="grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)_auto]">
+      <section
+        aria-label="Sélection et cartes"
+        className="shrink-0 border-b border-white/10 px-2 py-2"
+      >
+        <div className="mx-auto flex max-w-5xl flex-col items-stretch gap-3 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex items-start justify-center gap-2 lg:flex-1 lg:justify-end">
             <SelectedCell />
             <IdentityCard />
           </div>
-          <div className={cn("flex items-center gap-x-2")}>
+          <History className="lg:shrink-0" />
+          <div className="flex items-start justify-center gap-2 lg:flex-1 lg:justify-start">
             <MysterySlot />
             <MysteryCard />
           </div>
         </div>
+      </section>
+
+      <PeriodicTable className="min-h-0" />
+
+      <footer className="flex shrink-0 items-center gap-3 border-t-3 border-accent bg-[#2d3e47]/50 px-2 py-1.5">
+        <Legend className="min-w-0 flex-1" />
         <NewGameButton />
-      </div>
-      <Legend />
-    </div>
+      </footer>
+    </main>
   );
 }

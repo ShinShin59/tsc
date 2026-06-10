@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 import {
   HISTORY_CELL_SIZE,
-  HISTORY_CONTAINER_WIDTH,
   HISTORY_GAP,
   HISTORY_GAUGE_HEIGHT,
   HISTORY_GAUGE_WIDTH,
@@ -34,7 +33,7 @@ function HistoryTile({
       role="img"
       aria-label={`${element.name} (${element.symbol})`}
       onMouseEnter={onMouseEnter}
-      className="flex cursor-default flex-col items-center gap-0.5"
+      className="flex shrink-0 cursor-default flex-col items-center gap-0.5"
     >
       <div
         className={cn(
@@ -64,7 +63,11 @@ function HistoryTile({
   );
 }
 
-export function History() {
+type HistoryProps = {
+  className?: string;
+};
+
+export function History({ className }: HistoryProps) {
   const history = useGameStore((state) => state.history);
   const mysteryNumber = useGameStore((state) => state.mysteryNumber);
   const setHoveredNumber = useGameStore((state) => state.setHoveredNumber);
@@ -79,8 +82,8 @@ export function History() {
   return (
     <div
       aria-label="Historique des coups"
-      className="absolute top-6 right-[11%] z-10 flex"
-      style={{ width: HISTORY_CONTAINER_WIDTH, gap: HISTORY_GAP }}
+      className={cn("flex justify-center overflow-x-auto", className)}
+      style={{ gap: HISTORY_GAP }}
       onMouseLeave={() => setHoveredNumber(null)}
     >
       {visible.map((elementNumber, index) => (

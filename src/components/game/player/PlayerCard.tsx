@@ -4,23 +4,23 @@ import {
   buildUndiscoveredPropertyRows,
 } from "@/components/game/property-card/buildPropertyRows";
 import { PropertyCardList } from "@/components/game/property-card/PropertyCardList";
-import { resolveDisplayNumber, shouldShowComparison } from "@/lib/rules";
+import { resolveDisplayElement, shouldShowComparison } from "@/lib/rules";
 import { useGameStore } from "@/store/game";
 
 const cardClassName = "flex flex-col";
 
 export function PlayerCard() {
-  const hoveredNumber = useGameStore((state) => state.hoveredNumber);
-  const committedNumber = useGameStore((state) => state.committedNumber);
+  const hoveredElement = useGameStore((state) => state.hoveredElement);
+  const committedElement = useGameStore((state) => state.committedElement);
   const history = useGameStore((state) => state.history);
   const mysteryNumber = useGameStore((state) => state.mysteryNumber);
 
-  const displayNumber = resolveDisplayNumber({ hoveredNumber, committedNumber });
-  const element = displayNumber ? getElement(displayNumber) : undefined;
+  const displayElement = resolveDisplayElement({ hoveredElement, committedElement });
+  const element = displayElement ? getElement(displayElement) : undefined;
   const showComparison = shouldShowComparison({
-    displayNumber,
-    hoveredNumber,
-    committedNumber,
+    displayElement,
+    hoveredElement,
+    committedElement,
     history,
   });
 

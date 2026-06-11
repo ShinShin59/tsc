@@ -14,8 +14,7 @@ French is the primary UI language. Code identifiers and types stay in English.
 | **partieStatus** | `"playing"`, `"won"`, or `"lost"` — blocks grid commits when not playing | Game state |
 | **partieMaxTries** | Active coup cap for the current partie (snapshotted at start) | Max tries |
 | **maxTries** | User preference for coup cap (settings slider); applies next partie | Try limit |
-| **Coup** | One grid **commit** (`commitSelection`) — click runs comparison vs l'élément mystère and appends to historique | Try, guess, essai |
-| **Essai** | GDD term for pre-encoche selection — **superseded** by ADR-0003 (click = coup); use **coup** in historique | Attempt |
+| **Coup** | One grid **commit** (`commitElement`) — click runs comparison vs l'élément mystère and appends to historique | Try |
 | **Mode entraînement** | Practice with random seed via « Nouvelle partie »; daily win gate deferred (ADR-0005) | Practice mode, sandbox |
 
 ## Selection flow (ADR-0003; GDD §2 encoche deferred)
@@ -24,8 +23,7 @@ French is the primary UI language. Code identifiers and types stay in English.
 | ---- | ---------- | ---------------- |
 | **Survol** | Pointer over a cell — browse Carte d'identité without committing | Hover |
 | **Visualisation** | Carte d'identité preview (all properties dimmed, values visible) | Preview, inspect |
-| **Commit** | Grid click runs comparison vs mystery (`commitSelection` in code) | Validation (GDD encoche deferred) |
-| **Encoche** | GDD checkmark validation — **not implemented**; click commits instead | Check button, tick |
+| **Commit** | Grid click runs comparison vs mystery (`commitElement` in code) | Validation (GDD encoche deferred) |
 
 ## Identity card & comparison
 
@@ -113,6 +111,6 @@ Normalized synthesis classes (GDD §5): Big Bang, étoiles mourantes, fusion d'�
 | Term | Definition | Aliases to avoid |
 | ---- | ---------- | ---------------- |
 | **Seed** | `YYYY-MM-DD` Paris calendar day for daily mystery; random for training | Random seed (qualify which mode) |
-| **hoveredNumber** | Store: element under pointer on grid; `null` off table | hover state |
-| **committedNumber** | Store: last clicked element; comparison frozen until next commit | last selection |
-| **commitSelection** | Store action: run comparison on click; hook for future `history[]` | validate, encoche |
+| **hoveredElement** | Store: element under pointer on grid; `null` off table (atomic number) | hover state |
+| **committedElement** | Store: last clicked element; comparison frozen until next commit (atomic number) | last selection |
+| **commitElement** | Store action: run comparison on click; appends to `history[]` | validate |

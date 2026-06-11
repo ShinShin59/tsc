@@ -1,14 +1,14 @@
 import { getElement } from "@/data/elements";
-import { resolveDisplayNumber } from "@/lib/rules";
+import { resolveDisplayElement } from "@/lib/rules";
 import { useGameStore } from "@/store/game";
 import { ElementSlot } from "@/components/game/shared/ElementSlot";
 
 export function PlayerCell() {
-  const hoveredNumber = useGameStore((state) => state.hoveredNumber);
-  const committedNumber = useGameStore((state) => state.committedNumber);
+  const hoveredElement = useGameStore((state) => state.hoveredElement);
+  const committedElement = useGameStore((state) => state.committedElement);
 
-  const displayNumber = resolveDisplayNumber({ hoveredNumber, committedNumber });
-  const element = displayNumber ? getElement(displayNumber) : undefined;
+  const displayElement = resolveDisplayElement({ hoveredElement, committedElement });
+  const element = displayElement ? getElement(displayElement) : undefined;
 
   return (
     <ElementSlot

@@ -8,7 +8,7 @@ export type RoundSnapshot = {
 
 const DEFAULT_SUBTITLE = "• Retrouve l'Élément mystère •";
 
-export function canCommit(roundStatus: RoundStatus): boolean {
+export function canCommitElement(roundStatus: RoundStatus): boolean {
   return roundStatus === "playing";
 }
 
@@ -39,23 +39,23 @@ export function resolveHeaderSubtitle(
   return DEFAULT_SUBTITLE;
 }
 
-export function resolveDisplayNumber(input: {
-  hoveredNumber: number | null;
-  committedNumber: number | null;
+export function resolveDisplayElement(input: {
+  hoveredElement: number | null;
+  committedElement: number | null;
 }): number | null {
-  return input.hoveredNumber ?? input.committedNumber;
+  return input.hoveredElement ?? input.committedElement;
 }
 
 export function shouldShowComparison(input: {
-  displayNumber: number | null;
-  hoveredNumber: number | null;
-  committedNumber: number | null;
+  displayElement: number | null;
+  hoveredElement: number | null;
+  committedElement: number | null;
   history: readonly number[];
 }): boolean {
   return (
-    input.displayNumber !== null &&
-    (input.history.includes(input.displayNumber) ||
-      (input.hoveredNumber === null && input.displayNumber === input.committedNumber))
+    input.displayElement !== null &&
+    (input.history.includes(input.displayElement) ||
+      (input.hoveredElement === null && input.displayElement === input.committedElement))
   );
 }
 

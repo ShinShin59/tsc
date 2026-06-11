@@ -55,7 +55,7 @@ function HistoryTile({
 export function History() {
   const history = useGameStore((state) => state.history);
   const mysteryNumber = useGameStore((state) => state.mysteryNumber);
-  const setHoveredNumber = useGameStore((state) => state.setHoveredNumber);
+  const setHoveredElement = useGameStore((state) => state.setHoveredElement);
 
   const visible = history.slice(-HISTORY_VISIBLE_COUNT);
   const startIndex = history.length - visible.length;
@@ -64,14 +64,14 @@ export function History() {
     <div
       aria-label="Historique des coups"
       className="flex min-h-[calc(--spacing(6)+1px+(--spacing(3)))] min-w-[calc(10*(--spacing(5))+9*(--spacing(0)))] shrink justify-center gap-0.5 sm:min-h-[calc(--spacing(6)+1px+(--spacing(4)))] sm:min-w-[calc(10*(--spacing(6))+9*(--spacing(0)))] md:order-2"
-      onMouseLeave={() => setHoveredNumber(null)}
+      onMouseLeave={() => setHoveredElement(null)}
     >
       {visible.map((elementNumber, index) => (
         <HistoryTile
           key={startIndex + index}
           elementNumber={elementNumber}
           mysteryNumber={mysteryNumber}
-          onMouseEnter={() => setHoveredNumber(elementNumber)}
+          onMouseEnter={() => setHoveredElement(elementNumber)}
         />
       ))}
     </div>

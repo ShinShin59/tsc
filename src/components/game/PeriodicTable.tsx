@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { elements } from "@/data/elements";
-import { canCommit, resolveDisplayNumber } from "@/lib/rules";
+import { canCommitElement, resolveDisplayElement } from "@/lib/rules";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/store/game";
 import {
@@ -28,35 +28,35 @@ const tableGridStyle = {
 } as CSSProperties;
 
 export function PeriodicTable({ className }: PeriodicTableProps) {
-  const hoveredNumber = useGameStore((state) => state.hoveredNumber);
-  const committedNumber = useGameStore((state) => state.committedNumber);
+  const hoveredElement = useGameStore((state) => state.hoveredElement);
+  const committedElement = useGameStore((state) => state.committedElement);
   const roundStatus = useGameStore((state) => state.roundStatus);
-  const setHoveredNumber = useGameStore((state) => state.setHoveredNumber);
-  const commitSelection = useGameStore((state) => state.commitSelection);
+  const setHoveredElement = useGameStore((state) => state.setHoveredElement);
+  const commitElement = useGameStore((state) => state.commitElement);
 
-  const highlightedNumber = resolveDisplayNumber({ hoveredNumber, committedNumber });
+  const highlightedElement = resolveDisplayElement({ hoveredElement, committedElement });
 
   return (
     <div
       className={cn(
-        "[container-type:size] flex h-full min-h-0 items-center justify-center overflow-hidden p-1 sm:p-2",
+        "@container-size flex h-full min-h-0 items-center justify-center overflow-hidden p-1 sm:p-2",
         className,
       )}
     >
       <div
         className="grid shrink-0 gap-px"
-        onMouseLeave={() => setHoveredNumber(null)}
+        onMouseLeave={() => setHoveredElement(null)}
         style={tableGridStyle}
       >
         {elements.map((el) => (
           <div key={el.number} style={{ gridColumn: el.xpos, gridRow: el.ypos }}>
             <ElementCell
               element={el}
-              selected={el.number === highlightedNumber}
-              onMouseEnter={() => setHoveredNumber(el.number)}
+              selected={el.number === highlightedElement}
+              onMouseEnter={() => setHoveredElement(el.number)}
               onClick={() => {
-                if (canCommit(roundStatus)) {
-                  commitSelection(el.number);
+                if (canCommitElement(roundStatus)) {
+                  commitElement(el.number);
                 }
               }}
             />

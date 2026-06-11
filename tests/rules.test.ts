@@ -6,25 +6,25 @@ import {
 import { getElement } from "@/data/elements";
 import { getDiscoveredPropertyIds } from "@/data/properties";
 import {
-  canCommit,
+  canCommitElement,
   isMysteryCellRevealed,
-  resolveDisplayNumber,
+  resolveDisplayElement,
   resolveHeaderSubtitle,
   shouldConfirmAbandon,
   shouldShowComparison,
 } from "@/lib/rules";
 
-describe("resolveDisplayNumber", () => {
+describe("resolveDisplayElement", () => {
   it("prefers hovered over committed", () => {
-    expect(resolveDisplayNumber({ hoveredNumber: 26, committedNumber: 11 })).toBe(26);
+    expect(resolveDisplayElement({ hoveredElement: 26, committedElement: 11 })).toBe(26);
   });
 
   it("falls back to committed when not hovering", () => {
-    expect(resolveDisplayNumber({ hoveredNumber: null, committedNumber: 11 })).toBe(11);
+    expect(resolveDisplayElement({ hoveredElement: null, committedElement: 11 })).toBe(11);
   });
 
   it("returns null when nothing is selected", () => {
-    expect(resolveDisplayNumber({ hoveredNumber: null, committedNumber: null })).toBeNull();
+    expect(resolveDisplayElement({ hoveredElement: null, committedElement: null })).toBeNull();
   });
 });
 
@@ -32,9 +32,9 @@ describe("shouldShowComparison", () => {
   it("shows comparison for a guess replayed from history", () => {
     expect(
       shouldShowComparison({
-        displayNumber: 11,
-        hoveredNumber: 11,
-        committedNumber: 26,
+        displayElement: 11,
+        hoveredElement: 11,
+        committedElement: 26,
         history: [26, 11],
       }),
     ).toBe(true);
@@ -43,9 +43,9 @@ describe("shouldShowComparison", () => {
   it("shows comparison for last commit after mouse leave", () => {
     expect(
       shouldShowComparison({
-        displayNumber: 26,
-        hoveredNumber: null,
-        committedNumber: 26,
+        displayElement: 26,
+        hoveredElement: null,
+        committedElement: 26,
         history: [26],
       }),
     ).toBe(true);
@@ -54,20 +54,20 @@ describe("shouldShowComparison", () => {
   it("dims rows when browsing an uncommitted element", () => {
     expect(
       shouldShowComparison({
-        displayNumber: 11,
-        hoveredNumber: 11,
-        committedNumber: 26,
+        displayElement: 11,
+        hoveredElement: 11,
+        committedElement: 26,
         history: [26],
       }),
     ).toBe(false);
   });
 });
 
-describe("canCommit", () => {
+describe("canCommitElement", () => {
   it("allows commits only while playing", () => {
-    expect(canCommit("playing")).toBe(true);
-    expect(canCommit("won")).toBe(false);
-    expect(canCommit("lost")).toBe(false);
+    expect(canCommitElement("playing")).toBe(true);
+    expect(canCommitElement("won")).toBe(false);
+    expect(canCommitElement("lost")).toBe(false);
   });
 });
 

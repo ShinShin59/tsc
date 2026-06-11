@@ -10,51 +10,51 @@ function resetStore(overrides: Partial<ReturnType<typeof useGameStore.getState>>
     roundStatus: "playing",
     maxTries: MAX_ATOMIC_NUMBER,
     roundMaxTries: MAX_ATOMIC_NUMBER,
-    hoveredNumber: null,
-    committedNumber: null,
+    hoveredElement: null,
+    committedElement: null,
     history: [],
     ...overrides,
   });
 }
 
-describe("useGameStore commitSelection", () => {
+describe("useGameStore commitElement", () => {
   beforeEach(() => {
     resetStore();
   });
 
   it("appends a new element to history on commit", () => {
-    useGameStore.getState().commitSelection(26);
-    expect(useGameStore.getState().committedNumber).toBe(26);
+    useGameStore.getState().commitElement(26);
+    expect(useGameStore.getState().committedElement).toBe(26);
     expect(useGameStore.getState().history).toEqual([26]);
   });
 
   it("does not append when re-clicking the same element", () => {
-    useGameStore.getState().commitSelection(26);
-    useGameStore.getState().commitSelection(26);
+    useGameStore.getState().commitElement(26);
+    useGameStore.getState().commitElement(26);
     expect(useGameStore.getState().history).toEqual([26]);
   });
 
   it("appends each distinct commit chronologically", () => {
-    useGameStore.getState().commitSelection(26);
-    useGameStore.getState().commitSelection(11);
-    useGameStore.getState().commitSelection(1);
+    useGameStore.getState().commitElement(26);
+    useGameStore.getState().commitElement(11);
+    useGameStore.getState().commitElement(1);
     expect(useGameStore.getState().history).toEqual([26, 11, 1]);
   });
 
   it("blocks commits once roundMaxTries is reached", () => {
     resetStore({ roundMaxTries: 2, maxTries: 2 });
-    useGameStore.getState().commitSelection(26);
-    useGameStore.getState().commitSelection(11);
-    useGameStore.getState().commitSelection(1);
+    useGameStore.getState().commitElement(26);
+    useGameStore.getState().commitElement(11);
+    useGameStore.getState().commitElement(1);
 
     expect(useGameStore.getState().history).toEqual([26, 11]);
-    expect(useGameStore.getState().committedNumber).toBe(11);
+    expect(useGameStore.getState().committedElement).toBe(11);
   });
 
   it("sets roundStatus to won when mystery element is committed", () => {
     resetStore({ mysteryNumber: 26 });
-    useGameStore.getState().commitSelection(11);
-    useGameStore.getState().commitSelection(26);
+    useGameStore.getState().commitElement(11);
+    useGameStore.getState().commitElement(26);
 
     expect(useGameStore.getState().roundStatus).toBe("won");
     expect(useGameStore.getState().history).toEqual([11, 26]);
@@ -62,8 +62,8 @@ describe("useGameStore commitSelection", () => {
 
   it("sets roundStatus to lost when cap is reached without a win", () => {
     resetStore({ mysteryNumber: 1, roundMaxTries: 2, maxTries: 2 });
-    useGameStore.getState().commitSelection(26);
-    useGameStore.getState().commitSelection(11);
+    useGameStore.getState().commitElement(26);
+    useGameStore.getState().commitElement(11);
 
     expect(useGameStore.getState().roundStatus).toBe("lost");
     expect(useGameStore.getState().history).toEqual([26, 11]);
@@ -71,9 +71,9 @@ describe("useGameStore commitSelection", () => {
 
   it("blocks commits after the round ends", () => {
     resetStore({ mysteryNumber: 26 });
-    useGameStore.getState().commitSelection(26);
+    useGameStore.getState().commitElement(26);
 
-    useGameStore.getState().commitSelection(11);
+    useGameStore.getState().commitElement(11);
     expect(useGameStore.getState().history).toEqual([26]);
     expect(useGameStore.getState().roundStatus).toBe("won");
   });
@@ -100,7 +100,7 @@ describe("useGameStore setMaxTries", () => {
 
 describe("useGameStore startTrainingRound", () => {
   beforeEach(() => {
-    resetStore({ maxTries: 12, roundMaxTries: 10, history: [26], committedNumber: 26 });
+    resetStore({ maxTries: 12, roundMaxTries: 10, history: [26], committedElement: 26 });
   });
 
   it("resets session state and switches to training", () => {
@@ -110,8 +110,8 @@ describe("useGameStore startTrainingRound", () => {
     expect(state.gameMode).toBe("training");
     expect(state.roundStatus).toBe("playing");
     expect(state.history).toEqual([]);
-    expect(state.committedNumber).toBeNull();
-    expect(state.hoveredNumber).toBeNull();
+    expect(state.committedElement).toBeNull();
+    expect(state.hoveredElement).toBeNull();
     expect(state.roundMaxTries).toBe(12);
     expect(state.seed).not.toBe("2026-06-09");
     expect(state.mysteryNumber).toBeGreaterThanOrEqual(1);

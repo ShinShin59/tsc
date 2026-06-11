@@ -29,33 +29,33 @@ function createInitialRoundState() {
     roundStatus: "playing" as RoundStatus,
     maxTries,
     roundMaxTries: maxTries,
-    hoveredNumber: null as number | null,
-    committedNumber: null as number | null,
+    hoveredElement: null as number | null,
+    committedElement: null as number | null,
     history: [] as number[],
   };
 }
 
 type GameState = ReturnType<typeof createInitialRoundState> & {
-  setHoveredNumber: (elementNumber: number | null) => void;
+  setHoveredElement: (elementNumber: number | null) => void;
   setMaxTries: (maxTries: number) => void;
-  commitSelection: (elementNumber: number) => void;
+  commitElement: (elementNumber: number) => void;
   startTrainingRound: () => void;
 };
 
 export const useGameStore = create<GameState>((set) => ({
   ...createInitialRoundState(),
 
-  setHoveredNumber: (elementNumber) => set({ hoveredNumber: elementNumber }),
+  setHoveredElement: (elementNumber) => set({ hoveredElement: elementNumber }),
 
   setMaxTries: (maxTries) => set({ maxTries: clampMaxTries(maxTries) }),
 
-  commitSelection: (elementNumber) =>
+  commitElement: (elementNumber) =>
     set((state) => {
       if (state.roundStatus !== "playing") {
         return state;
       }
 
-      if (state.committedNumber === elementNumber) {
+      if (state.committedElement === elementNumber) {
         return state;
       }
 
@@ -73,7 +73,7 @@ export const useGameStore = create<GameState>((set) => ({
       }
 
       return {
-        committedNumber: elementNumber,
+        committedElement: elementNumber,
         history,
         roundStatus,
       };
@@ -91,8 +91,8 @@ export const useGameStore = create<GameState>((set) => ({
         seed,
         mysteryNumber,
         roundStatus: "playing",
-        hoveredNumber: null,
-        committedNumber: null,
+        hoveredElement: null,
+        committedElement: null,
         history: [],
         roundMaxTries: state.maxTries,
       };

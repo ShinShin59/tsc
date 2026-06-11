@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import type { Element } from "@/data/elements";
 import { resolvePaletteAppearance } from "@/palette/index";
 import { cn } from "@/lib/utils";
@@ -6,8 +5,6 @@ import { cn } from "@/lib/utils";
 type ElementCellProps = {
   element: Element;
   selected?: boolean;
-  className?: string;
-  style?: CSSProperties;
   onClick?: () => void;
   onMouseEnter?: () => void;
 };
@@ -15,8 +12,6 @@ type ElementCellProps = {
 export function ElementCell({
   element,
   selected = false,
-  className,
-  style,
   onClick,
   onMouseEnter,
 }: ElementCellProps) {
@@ -32,9 +27,8 @@ export function ElementCell({
       className={cn(
         "flex size-full p-0.5 md:py-1 flex-col items-center justify-center md:justify-between  leading-none cursor-pointer md:rounded-sm border border-black/20 transition-[filter] hover:brightness-110 relative",
         textClass,
-        className,
       )}
-      style={{ backgroundColor, ...style }}
+      style={{ backgroundColor }}
     >
       <span className="hidden sm:inline absolute top-[2px] left-[2px] md:relative md:top-0 md:left-0 text-[4px] sm:text-[6px] md:text-[8px] self-baseline">
         {element.number}

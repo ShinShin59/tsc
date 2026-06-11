@@ -15,11 +15,7 @@ export function ElementSlot({ element, ariaLabel }: ElementSlotProps) {
 
   return (
     <div className={CELL_SLOT_CLASS} aria-label={ariaLabel}>
-      <ElementCell
-        element={element}
-        selected
-        className="cursor-default hover:brightness-100"
-      />
+      <ElementCell element={element} selected />
     </div>
   );
 }

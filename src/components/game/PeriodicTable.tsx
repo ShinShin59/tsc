@@ -15,7 +15,7 @@ export function PeriodicTable() {
 
   return (
     <section
-      className={cn("@container-size flex h-full min-h-0 items-center justify-center p-1 sm:p-2")}
+      className={cn("@container-size flex min-h-0 flex-1 items-center justify-center p-1 sm:p-2")}
     >
       <div
         className={cn(

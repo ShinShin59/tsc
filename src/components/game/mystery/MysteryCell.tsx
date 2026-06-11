@@ -16,7 +16,7 @@ export function MysteryCell() {
   if (!displayElement) {
     return (
       <div
-        className="flex size-16 shrink-0 items-center justify-center rounded-sm border-2 border-accent/30 bg-transparent sm:size-20 md:size-24"
+        className="flex size-16 shrink-0 self-center items-center justify-center rounded-sm border-2 border-accent/30 bg-transparent sm:size-20 md:size-24"
         aria-label={ariaLabel}
       >
         <span className="text-3xl font-bold leading-none text-accent sm:text-4xl md:text-5xl">?</span>
@@ -25,7 +25,7 @@ export function MysteryCell() {
   }
 
   return (
-    <div className="size-16 shrink-0 sm:size-20 md:size-24" aria-label={ariaLabel}>
+    <div className="size-16 shrink-0 self-center sm:size-20 md:size-24" aria-label={ariaLabel}>
       <ElementCell element={displayElement} big />
     </div>
   );

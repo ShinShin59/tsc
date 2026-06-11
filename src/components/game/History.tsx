@@ -63,7 +63,7 @@ export function History() {
   return (
     <div
       aria-label="Historique des coups"
-      className="flex min-h-[calc(--spacing(6)+1px+(--spacing(3)))] min-w-[calc(10*(--spacing(5))+9*(--spacing(0)))] shrink justify-center gap-0.5 sm:min-h-[calc(--spacing(6)+1px+(--spacing(4)))] sm:min-w-[calc(10*(--spacing(6))+9*(--spacing(0)))] mt-4"
+      className="flex min-h-[calc(--spacing(6)+1px+(--spacing(3)))] min-w-[calc(10*(--spacing(5))+9*(--spacing(0)))] shrink justify-center gap-0.5 sm:min-h-[calc(--spacing(6)+1px+(--spacing(4)))] sm:min-w-[calc(10*(--spacing(6))+9*(--spacing(0)))]"
       onMouseLeave={() => setHoveredElement(null)}
     >
       {visible.map((elementNumber, index) => (

@@ -25,16 +25,22 @@ export function ElementCell({
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       className={cn(
-        "flex size-full p-0.5 md:py-1 flex-col items-center justify-center md:justify-between  leading-none cursor-pointer md:rounded-sm border border-black/20 transition-[filter] hover:brightness-110 relative",
+        "@container-size relative flex size-full flex-col items-center justify-center overflow-hidden p-0.5 leading-none cursor-pointer border border-black/20 transition-[filter] hover:brightness-110",
+        " [@container_(min-height:2.5rem)]:py-1",
+        "@min-[2.5rem]:rounded-sm",
         textClass,
       )}
       style={{ backgroundColor }}
     >
-      <span className="hidden sm:inline absolute top-[2px] left-[2px] md:relative md:top-0 md:left-0 text-[4px] sm:text-[6px] md:text-[8px] self-baseline">
+      <span className="hidden @min-[1.5rem]:inline absolute top-[2px] left-[2px] text-[clamp(3px,20cqmin,8px)] self-baseline @min-[2.5rem]:relative @min-[2.5rem]:top-0 @min-[2.5rem]:left-0">
         {element.number}
       </span>
-      <span className="text-[6px] sm:text-[8px] md:text-[10px] md:font-bold mt-1 md:mt-0">{element.symbol}</span>
-      <span className="hidden text-[8px] md:inline truncate max-w-full">{element.name}</span>
+      <span className="text-[clamp(5px,34cqmin,11px)] @min-[2.5rem]:font-bold md:translate-y-1">
+        {element.symbol}
+      </span>
+      <span className="hidden truncate max-w-full text-[clamp(4px,18cqmin,8px)] [@container_(min-width:2.5rem)_and_(min-height:2rem)]:inline mt-auto">
+        {element.name}
+      </span>
     </button>
   );
 }

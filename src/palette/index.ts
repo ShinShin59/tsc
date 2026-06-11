@@ -1,3 +1,4 @@
+// vibed
 import type { Element, ElementCategory } from "@/data/elements";
 import type { LegendPropertyId } from "@/data/properties";
 

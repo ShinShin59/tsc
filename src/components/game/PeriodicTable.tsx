@@ -21,10 +21,10 @@ const tableGridStyle = {
   "--table-cell-max": `${TABLE_CELL_MAX_SIZE}px`,
   "--cell-from-width": `calc((100cqw - ${TABLE_COLUMN_GAPS}px) / ${TABLE_COLUMNS})`,
   "--cell-from-height": `calc((100cqh - ${TABLE_ROW_GAPS}px) / ${TABLE_ROW_SIZE_UNITS})`,
-  "--cell-size":
+  "--table-cell":
     "min(var(--table-cell-max), var(--cell-from-width), var(--cell-from-height))",
-  gridTemplateColumns: "repeat(18, var(--cell-size))",
-  gridTemplateRows: `repeat(7, var(--cell-size)) calc(var(--cell-size) * ${TABLE_LANTHANIDE_GAP_FRACTION}) repeat(2, var(--cell-size))`,
+  gridTemplateColumns: "repeat(18, var(--table-cell))",
+  gridTemplateRows: `repeat(7, var(--table-cell)) calc(var(--table-cell) * ${TABLE_LANTHANIDE_GAP_FRACTION}) repeat(2, var(--table-cell))`,
 } as CSSProperties;
 
 export function PeriodicTable({ className }: PeriodicTableProps) {

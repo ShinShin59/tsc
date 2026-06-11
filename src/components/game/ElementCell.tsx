@@ -30,25 +30,17 @@ export function ElementCell({
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       className={cn(
-        "@container flex size-(--cell-size) min-w-0 cursor-pointer flex-col rounded-sm border border-black/20 p-0.5 text-left transition-[filter] hover:brightness-110",
+        "flex size-full p-0.5 md:py-1 flex-col items-center justify-center md:justify-between  leading-none cursor-pointer md:rounded-sm border border-black/20 transition-[filter] hover:brightness-110 relative",
         textClass,
         className,
       )}
       style={{ backgroundColor, ...style }}
     >
-      <div className="text-[6px] leading-none @min-[2.5rem]:text-[7px]">
-        <span>{element.number}</span>
-      </div>
-
-      <div className="flex min-h-0 flex-1 items-center justify-center">
-        <span className="text-[10px] font-bold leading-none @min-[2.5rem]:text-xs">{element.symbol}</span>
-      </div>
-
-      <div className="hidden min-h-0 shrink items-end justify-center text-center leading-[1.05] @min-[2.5rem]:flex">
-        <span className="line-clamp-2 max-w-full px-0.5 text-[6px] font-semibold @min-[2.5rem]:text-[8px]">
-          {element.name}
-        </span>
-      </div>
+      <span className="hidden sm:inline absolute top-[2px] left-[2px] md:relative md:top-0 md:left-0 text-[4px] sm:text-[6px] md:text-[8px] self-baseline">
+        {element.number}
+      </span>
+      <span className="text-[6px] sm:text-[8px] md:text-[10px] md:font-bold mt-1 md:mt-0">{element.symbol}</span>
+      <span className="hidden text-[8px] md:inline truncate max-w-full">{element.name}</span>
     </button>
   );
 }

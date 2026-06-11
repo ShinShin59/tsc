@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import type { Element } from "@/data/elements";
 import { ElementCell } from "@/components/game/ElementCell";
 import { CELL_SLOT_CLASS } from "@/components/game/shared/cellSlot";
@@ -19,8 +18,7 @@ export function ElementSlot({ element, ariaLabel }: ElementSlotProps) {
       <ElementCell
         element={element}
         selected
-        className="size-full cursor-default hover:brightness-100"
-        style={{ "--cell-size": "100%" } as CSSProperties}
+        className="cursor-default hover:brightness-100"
       />
     </div>
   );

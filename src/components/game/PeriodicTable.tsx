@@ -14,7 +14,7 @@ export function PeriodicTable() {
   const highlightedElement = resolveDisplayElement({ hoveredElement, committedElement });
 
   return (
-    <div
+    <section
       className={cn("@container-size flex h-full min-h-0 items-center justify-center p-1 sm:p-2")}
     >
       <div
@@ -40,6 +40,6 @@ export function PeriodicTable() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

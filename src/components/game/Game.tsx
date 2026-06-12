@@ -5,16 +5,16 @@ import { PeriodicTable } from "@/components/game/PeriodicTable";
 
 export function Game() {
   return (
-    <main className="flex min-h-0 flex-1 flex-col">
+    <main className="flex min-h-0 min-w-0 flex-1 flex-col">
       <section
         aria-label="Element sélectionnés et élément mystère"
-        className="flex min-h-0 flex-1 flex-col"
+        className="flex shrink-0 flex-col min-w-0"
       >
         <div className="flex shrink-0 gap-2">
           <PlayerElement />
           <MysteryElement />
         </div>
-        <div className="flex min-h-0 flex-1 items-center justify-center">
+        <div className="flex shrink-0 items-center justify-center">
           <History />
         </div>
       </section>

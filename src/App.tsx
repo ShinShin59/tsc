@@ -7,7 +7,7 @@ import { NewGameButton } from "./components/game/NewGameButton";
 function App() {
   return (
     <TooltipProvider>
-      <div className="flex h-[calc(100dvh-(--spacing(10)))] flex-col max-w-5xl mx-auto px-4">
+      <div className="flex h-[calc(100dvh-(--spacing(10)))] min-w-0 flex-col max-w-5xl mx-auto px-4">
         <Header />
         <Game />
       </div>

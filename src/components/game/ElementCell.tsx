@@ -27,16 +27,19 @@ export function ElementCell({
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       className={cn(
-        "@container-size relative flex size-full flex-col items-center justify-center overflow-hidden p-0.5 leading-none cursor-pointer border border-black/20 transition-[filter] hover:brightness-110",
+        "@container relative flex size-full flex-col items-center justify-center overflow-hidden p-0.5 leading-none cursor-pointer border border-black/20 transition-[filter] hover:brightness-110",
         " [@container_(min-height:2.5rem)]:py-1",
         "@min-[2.5rem]:rounded-sm",
         textClass,
       )}
       style={{ backgroundColor }}
     >
-      <span className="hidden @min-[1.5rem]:inline absolute top-[2px] left-[2px] text-[clamp(3px,20cqmin,8px)] self-baseline @min-[2.5rem]:relative @min-[2.5rem]:top-0 @min-[2.5rem]:left-0">
-        {element.number}
-      </span>
+      {!big && (
+        <span className="hidden @min-[1.5rem]:inline absolute top-[2px] left-[2px] text-[clamp(3px,20cqmin,8px)] self-baseline @min-[2.5rem]:relative @min-[2.5rem]:top-0 @min-[2.5rem]:left-0">
+          {element.number}
+        </span>
+      )}
+ 
       <span
         className={cn(
           big

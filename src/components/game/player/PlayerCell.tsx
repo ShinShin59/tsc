@@ -14,7 +14,7 @@ export function PlayerCell() {
   if (!element) {
     return (
       <div
-        className="flex size-16 shrink-0 self-end sm:self-center items-center justify-center rounded-sm border-2 border-accent/30 bg-transparent sm:size-20 md:size-24 order-2"
+        className="flex size-16 shrink-0 self-end sm:self-center items-center justify-center rounded-sm border-2 border-accent/30 bg-transparent sm:size-20 md:size-24"
         aria-label={ariaLabel}
       >
         <span className="text-3xl font-bold leading-none text-accent sm:text-4xl md:text-5xl">
@@ -26,7 +26,7 @@ export function PlayerCell() {
 
   return (
     <div
-      className="size-16 shrink-0 self-end sm:self-center sm:size-20 md:size-24 order-2"
+      className="size-16 shrink-0 self-end sm:self-center sm:size-20 md:size-24"
       aria-label={ariaLabel}
     >
       <ElementCell element={element} big />

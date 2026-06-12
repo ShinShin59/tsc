@@ -15,13 +15,16 @@ export function PeriodicTable() {
 
   return (
     <section
-      className={cn("@container-size flex min-h-0 flex-1 items-center justify-center p-1 sm:p-2")}
+      className={cn(
+        "@container-size flex h-0 min-h-0 min-w-0 w-full flex-1 items-center justify-center p-1 sm:p-2",
+        "[--cell:min(64px,calc((100cqw-17px)/18),calc((100cqh-9px)/9.06))]",
+      )}
     >
       <div
         className={cn(
-          "grid shrink-0 gap-px",
-          "grid-cols-[repeat(18,min(64px,calc((100cqw-17px)/18),calc((100cqh-9px)/9.06)))]",
-          "grid-rows-[repeat(7,min(64px,calc((100cqw-17px)/18),calc((100cqh-9px)/9.06)))_calc(min(64px,calc((100cqw-17px)/18),calc((100cqh-9px)/9.06))*0.06)_repeat(2,min(64px,calc((100cqw-17px)/18),calc((100cqh-9px)/9.06)))]",
+          "grid min-w-0 max-w-full shrink gap-px",
+          "grid-cols-[repeat(18,var(--cell))]",
+          "grid-rows-[repeat(7,var(--cell))_calc(var(--cell)*0.06)_repeat(2,var(--cell))]",
         )}
         onMouseLeave={() => setHoveredElement(null)}
       >
